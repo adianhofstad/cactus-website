@@ -22,10 +22,12 @@
     "@type": "Restaurant",
     "name": "Cactus Cafe & Restaurant",
     "servesCuisine": "Mexican",
-    "telephone": "+47XXXXXXXX",
+    "telephone": "+4769313705",
     "url": "https://adianhofstad.github.io/cactus-website/",
     "address": {
       "@type": "PostalAddress",
+      "streetAddress": "Nygaardsgata 21",
+      "postalCode": "1606",
       "addressLocality": "Fredrikstad",
       "addressCountry": "NO"
     },
@@ -135,13 +137,15 @@
     }
 
     .nav-logo {
-      display: flex; align-items: center; gap: 0.55rem;
+      display: flex; align-items: center;
       text-decoration: none;
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem; font-weight: 700;
-      color: var(--red);
     }
-    .nav-logo svg { flex-shrink: 0; }
+    .nav-logo img {
+      height: 44px;
+      width: auto;
+      border-radius: 6px;
+      display: block;
+    }
 
     .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
     .nav-links a {
@@ -183,37 +187,25 @@
       min-height: 100vh;
       display: flex; align-items: center;
       position: relative;
-      background: #1a0800;
+      background: url('images/hero.jpg') center center / cover no-repeat;
       overflow: hidden;
     }
 
-    /* Warm gradient layers */
+    /* Dark overlay for text readability */
     .hero-bg {
       position: absolute; inset: 0; pointer-events: none;
-      background:
-        radial-gradient(ellipse 60% 80% at 10% 60%, rgba(180,30,30,0.22) 0%, transparent 70%),
-        radial-gradient(ellipse 50% 60% at 80% 20%, rgba(120,60,0,0.18) 0%, transparent 60%),
-        radial-gradient(ellipse 40% 50% at 50% 100%, rgba(60,20,0,0.4) 0%, transparent 70%);
-    }
-
-    /* Subtle diagonal line pattern */
-    .hero-pattern {
-      position: absolute; inset: 0; pointer-events: none; opacity: 0.04;
-      background-image: repeating-linear-gradient(
-        45deg,
-        #fff 0px, #fff 1px,
-        transparent 1px, transparent 28px
+      background: linear-gradient(
+        to right,
+        rgba(0,0,0,0.72) 0%,
+        rgba(0,0,0,0.5) 55%,
+        rgba(0,0,0,0.25) 100%
       );
     }
 
-    /* Large decorative cactus SVG right side */
-    .hero-cactus {
-      position: absolute;
-      right: -2%;
-      bottom: 0;
-      width: min(420px, 40vw);
-      opacity: 0.09;
-      pointer-events: none;
+    /* Subtle vignette bottom */
+    .hero-pattern {
+      position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 40%);
     }
 
     .hero-content { position: relative; z-index: 1; max-width: 680px; }
@@ -638,37 +630,32 @@
 
     .contact-map {
       border-radius: calc(var(--radius) * 2.5);
+      overflow: hidden;
       aspect-ratio: 4/3;
-      background: linear-gradient(145deg, #e0d8d0 0%, #ccc5bc 100%);
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 1rem; color: var(--muted);
       box-shadow: var(--shadow-lg);
-      position: relative; overflow: hidden;
     }
-    .contact-map::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: repeating-linear-gradient(90deg, rgba(0,0,0,0.03) 0, rgba(0,0,0,0.03) 1px, transparent 1px, transparent 40px),
-                  repeating-linear-gradient(0deg, rgba(0,0,0,0.03) 0, rgba(0,0,0,0.03) 1px, transparent 1px, transparent 40px);
+    .contact-map iframe {
+      width: 100%; height: 100%;
+      border: none; display: block;
     }
-    .contact-map-pin {
-      position: relative; z-index: 1;
-      width: 48px; height: 48px;
-      background: var(--red); border-radius: 50% 50% 50% 0;
-      transform: rotate(-45deg);
-      box-shadow: 0 4px 12px rgba(214,40,40,0.4);
-    }
-    .contact-map-pin::after {
-      content: ''; position: absolute;
-      width: 18px; height: 18px;
-      background: #fff; border-radius: 50%;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-    }
-    .contact-map p { position: relative; z-index: 1; font-size: 0.85rem; text-align: center; max-width: 200px; line-height: 1.6; }
 
     .contact-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    /* ── Delivery buttons on menu cards ── */
+    .menu-card-delivery {
+      display: flex; gap: 0.4rem; margin-top: 0.75rem; flex-wrap: wrap;
+    }
+    .btn-delivery {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      padding: 0.3rem 0.65rem;
+      border-radius: 4px;
+      font-size: 0.7rem; font-weight: 600;
+      text-decoration: none; letter-spacing: 0.02em;
+      transition: opacity var(--ease), transform var(--ease);
+    }
+    .btn-delivery:hover { opacity: 0.85; transform: translateY(-1px); }
+    .btn-wolt   { background: #009DE0; color: #fff; }
+    .btn-foodora { background: #D0006F; color: #fff; }
 
     /* ─────────────────────────────────────
        FOOTER
@@ -732,16 +719,7 @@
 <nav id="navbar">
   <div class="container nav-inner">
     <a href="#hjem" class="nav-logo">
-      <!-- SVG Cactus -->
-      <svg width="20" height="28" viewBox="0 0 20 28" fill="currentColor" aria-hidden="true">
-        <rect x="8" y="2" width="4" height="22" rx="2"/>
-        <rect x="1" y="11" width="7" height="3.5" rx="1.75"/>
-        <rect x="1" y="7" width="3.5" height="7.5" rx="1.75"/>
-        <rect x="12" y="14" width="7" height="3.5" rx="1.75"/>
-        <rect x="15.5" y="10" width="3.5" height="7.5" rx="1.75"/>
-        <rect x="7" y="24" width="6" height="2.5" rx="1.25"/>
-      </svg>
-      Cactus
+      <img src="images/logo.png" alt="Cactus Cafe & Restaurant" />
     </a>
     <ul class="nav-links">
       <li><a href="#meny">Meny</a></li>
@@ -770,25 +748,6 @@
 <section id="hjem">
   <div class="hero-bg"></div>
   <div class="hero-pattern"></div>
-
-  <!-- Decorative cactus illustration -->
-  <svg class="hero-cactus" viewBox="0 0 260 420" fill="white" aria-hidden="true">
-    <!-- main trunk -->
-    <rect x="108" y="60" width="44" height="340" rx="22"/>
-    <ellipse cx="130" cy="62" rx="22" ry="22"/>
-    <!-- left arm horizontal -->
-    <rect x="30" y="170" width="78" height="38" rx="19"/>
-    <!-- left arm vertical -->
-    <rect x="30" y="110" width="38" height="100" rx="19"/>
-    <ellipse cx="49" cy="112" rx="19" ry="19"/>
-    <!-- right arm horizontal -->
-    <rect x="152" y="210" width="80" height="38" rx="19"/>
-    <!-- right arm vertical -->
-    <rect x="194" y="150" width="38" height="100" rx="19"/>
-    <ellipse cx="213" cy="152" rx="19" ry="19"/>
-    <!-- base -->
-    <rect x="100" y="400" width="60" height="14" rx="7"/>
-  </svg>
 
   <div class="container">
     <div class="hero-content">
@@ -849,31 +808,55 @@
                 <div class="menu-card-name">Tortilla Pizza</div>
                 <div class="menu-card-desc">Hvetetortilla med tomatsaus, ost, kjøttdeig og jalapeño. Allergener: melk, hvete.</div>
                 <div class="menu-card-price">89 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Ostegratinerte Nachos</div>
                 <div class="menu-card-desc">Med salsa og rømme. Allergener: melk.</div>
                 <div class="menu-card-price">98 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Guacamole Nachos</div>
                 <div class="menu-card-desc">Hjemmelaget avocadodip med varme maischips.</div>
                 <div class="menu-card-price">85 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Dipmix</div>
                 <div class="menu-card-desc">Maischips med salsa.</div>
                 <div class="menu-card-price">69 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Hvitløkbrød</div>
                 <div class="menu-card-desc">Husets nybakte hvitløksbread. Allergener: egg, hvete, melk.</div>
                 <div class="menu-card-price">55 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Quesadilla</div>
                 <div class="menu-card-desc">Ostegratinert med jalapeño, tacosaus og rømme. Allergener: melk, hvete.</div>
                 <div class="menu-card-price">109 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
             </div>
           </div>
@@ -902,61 +885,109 @@
                 <div class="menu-card-name">Enchiladas de Picadillo</div>
                 <div class="menu-card-desc">Tre lag ostegratinerte maistortilla med tacokjøtt. Serveres med ris, salat, rømme og salsa.</div>
                 <div class="menu-card-price">188 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Enchiladas de Pollo</div>
                 <div class="menu-card-desc">Tre lag ostegratinerte maistortilla med marinert kylling. Serveres med ris, salat, rømme og salsa.</div>
                 <div class="menu-card-price">198 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Nachos Mexicano</div>
                 <div class="menu-card-desc">Ovnsgratinerte maischips med hjemmelaget tacokjøtt og ost. Serveres med salat, salsa og rømme.</div>
                 <div class="menu-card-price">179 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Nachos de Pollo</div>
                 <div class="menu-card-desc">Ovnsgratinerte maischips med kyllingfilet og ost. Serveres med salat, salsa og rømme.</div>
                 <div class="menu-card-price">179 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Taco</div>
                 <div class="menu-card-desc">Tre tacokjell med hjemmelaget tacokjøtt, ost og rømme. Serveres med nachos og salsa.</div>
                 <div class="menu-card-price">149 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Burrito Viva Mexico</div>
                 <div class="menu-card-desc">Ovnsgratinert hvetebortilla med tacokjøtt, salat, jalapeño, tacosaus og rømme.</div>
                 <div class="menu-card-price">188 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Burrito de Pollo</div>
                 <div class="menu-card-desc">Ovnsgratinert hvetebortilla med kylling, salat, tacosaus, rømme og husets ris.</div>
                 <div class="menu-card-price">188 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Burrito Vegetariano</div>
                 <div class="menu-card-desc">Ovnsgratinert hvetebortilla med løk, sjampinjong, paprika og mais. Serveres med salat, ris, tacosaus og rømme.</div>
                 <div class="menu-card-price">159 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Combo Burrito</div>
                 <div class="menu-card-desc">Hvetebortilla fylt med tacokjøtt, kylling og ost. Serveres med ris, salat, tacosaus og rømme.</div>
                 <div class="menu-card-price">188 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Fajitas med Kylling</div>
                 <div class="menu-card-desc">Serveres i rustikk stekepanne med paprika og løk, salat, guacamole, salsa, ris, ost og varme tortillas.</div>
                 <div class="menu-card-price">269 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Fajitas med Biff</div>
                 <div class="menu-card-desc">Serveres i rustikk stekepanne med paprika og løk, salat, guacamole, salsa, ris, ost og varme tortillas.</div>
                 <div class="menu-card-price">289 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Combo Fajitas</div>
                 <div class="menu-card-desc">Kylling og biff sammen i rustikk stekepanne med alt tilbehøret. Allergener: melk, hvete.</div>
                 <div class="menu-card-price">279 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
             </div>
           </div>
@@ -985,46 +1016,82 @@
                 <div class="menu-card-name">Kyllingfilet i Hvitvinsaus</div>
                 <div class="menu-card-desc">Stekt kyllingfilet med kremet hvitvinssaus, sjampinjong, løk og paprika. Serveres med sesonggrønnsaker og ris.</div>
                 <div class="menu-card-price">229 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Beefsteak Mexicana</div>
                 <div class="menu-card-desc">Stekt indrefilet med mais, paprika, jalapeño og løk i sterk tomatsaus. Valgfri poteter.</div>
                 <div class="menu-card-price">279 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Mexican Burger</div>
                 <div class="menu-card-desc">Hamburger med ost, nachos, salsa, guacamole, salat, sesamboller og pommes frites.</div>
                 <div class="menu-card-price">189 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Biffsnadder</div>
                 <div class="menu-card-desc">Strimlet biff med sjampinjong, løk, paprika og béarnaisesaus. Serveres med valgfri pommes frites.</div>
                 <div class="menu-card-price">219 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Kyllingsnadder med Peppersaus</div>
                 <div class="menu-card-desc">Marinert kyllingfilet med sjampinjong, løk og peppersaus. Serveres med salat og pommes frites.</div>
                 <div class="menu-card-price">219 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Biff</div>
                 <div class="menu-card-desc">Stekt indrefilet med béarnaisesaus, stekte sesonggrønnsaker og valgfri poteter.</div>
                 <div class="menu-card-price">279 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Pepperbiff</div>
                 <div class="menu-card-desc">Stekt indrefilet med peppersaus, sesongens stekte grønnsaker og valgfri poteter.</div>
                 <div class="menu-card-price">279 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Husets Kebab-tallerken</div>
                 <div class="menu-card-desc">Marinert biffkjøtt med hjemmelaget brød, salat, hvitløksaus og pommes frites.</div>
                 <div class="menu-card-price">189 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Husets Kylling Kebab-tallerken</div>
                 <div class="menu-card-desc">Marinert kyllingkjøtt med hjemmelaget brød, salat, hvitløksaus og pommes frites.</div>
                 <div class="menu-card-price">169 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
             </div>
           </div>
@@ -1053,36 +1120,64 @@
                 <div class="menu-card-name">Kyllingsalat</div>
                 <div class="menu-card-desc">Kyllingbrystfilet, ost, salat, tomat, agurk, mais, hvitløksaus og ananas. Serveres med brød.</div>
                 <div class="menu-card-price">159 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Tacosalat</div>
                 <div class="menu-card-desc">Tacokjøtt, ost, salat, avocado, mais, paprika, ananas, jalapeño nachos og salsa.</div>
                 <div class="menu-card-price">159 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Cæsar Salat</div>
                 <div class="menu-card-desc">Kyllingbrystfilet, bacon, brødkrutonger og parmesanost. Allergener: melk, hvete, sennep.</div>
                 <div class="menu-card-price">159 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Taco Wrap</div>
                 <div class="menu-card-desc">Tacokjøtt i hvetertortilla. Serveres med salat, salsa og rømme. Allergener: melk, hvete, soya.</div>
                 <div class="menu-card-price">149 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Kylling Wrap</div>
                 <div class="menu-card-desc">Marinert kyllingfilet, salat, tomat, agurk, feferoni og hvitløksaus. Allergener: melk, hvete, egg.</div>
                 <div class="menu-card-price">149 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Beef Wrap</div>
                 <div class="menu-card-desc">Stekt indrefilet med løk, salat, tomat, agurk, feferoni og hvitløksaus. Allergener: melk, hvete.</div>
                 <div class="menu-card-price">179 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Vegetar Wrap</div>
                 <div class="menu-card-desc">Fylt med ferske grønnsaker, salat og hvitløksaus. Allergener: melk, hvete.</div>
                 <div class="menu-card-price">129 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
             </div>
           </div>
@@ -1112,51 +1207,91 @@
                 <div class="menu-card-name">Calzone</div>
                 <div class="menu-card-desc">Innbakt pizza med ost og skinke. Allergener: melk.</div>
                 <div class="menu-card-price">129 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Margarita</div>
                 <div class="menu-card-desc">Tomatsaus og mozzarella. Allergener: ost.</div>
                 <div class="menu-card-price">119 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Capricosa</div>
                 <div class="menu-card-desc">Skinke og sjampinjong. Allergener: melk, hvete.</div>
                 <div class="menu-card-price">149 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Vegetariano</div>
                 <div class="menu-card-desc">Sjampinjong, løk, oliven, tomat og ruccola. Allergener: melk, hvete.</div>
                 <div class="menu-card-price">139 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Toscana</div>
                 <div class="menu-card-desc">Marinert kylling, tomat, løk, sjampinjong og peppermix. Serveres med hvitløksaus.</div>
                 <div class="menu-card-price">159 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Siciliana</div>
                 <div class="menu-card-desc">Skinke, pepperoni og sjampinjong. Allergener: melk, hvete.</div>
                 <div class="menu-card-price">159 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Lolo</div>
                 <div class="menu-card-desc">Kjøttdeig, oliven, sjampinjong, løk og hvitløksaus. Allergener: melk, hvete.</div>
                 <div class="menu-card-price">169 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Viva Mexico</div>
                 <div class="menu-card-desc">Kjøttdeig, pepperoni, mais, løk, paprika, jalapeño, nachochips og salsa.</div>
                 <div class="menu-card-price">159 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Mona Lisa</div>
                 <div class="menu-card-desc">Bacon, kjøttdeig og sjampinjong. Allergener: melk, hvete.</div>
                 <div class="menu-card-price">159 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Komponer din egen pizza</div>
                 <div class="menu-card-desc">Velg dine egne topping. Ekstra topping: ost, kjøtt, saus m.m. fra 25 kr.</div>
                 <div class="menu-card-price">180 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
             </div>
           </div>
@@ -1185,16 +1320,28 @@
                 <div class="menu-card-name">Pølse med Pommes Frites</div>
                 <div class="menu-card-desc">Klassisk barnerett.</div>
                 <div class="menu-card-price">59 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Minitaco</div>
                 <div class="menu-card-desc">Tacokjøtt, ost, mais og rømme med en tortilla og et tacokjell. Allergener: melk, hvete, soya.</div>
                 <div class="menu-card-price">79 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
               <div class="menu-card reveal">
                 <div class="menu-card-name">Tortilla Pizza</div>
                 <div class="menu-card-desc">Hvetetortilla med tomatsaus og ost. Allergener: melk, hvete.</div>
                 <div class="menu-card-price">79 kr</div>
+                <div class="menu-card-delivery">
+                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
+                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
+                </div>
               </div>
             </div>
           </div>
@@ -1212,7 +1359,6 @@
       <div class="about-visual reveal">
         <div class="about-visual-text">
           <div class="big">Cactus</div>
-          <div class="small">Desde Fredrikstad</div>
         </div>
       </div>
       <div>
@@ -1432,14 +1578,14 @@
           <h3>Adresse</h3>
           <p>
             Cactus Cafe & Restaurant<br>
-            [Gatenavn og nummer]<br>
+            Nygaardsgata 21<br>
             1606 Fredrikstad, Norge
           </p>
         </div>
         <div class="contact-block">
           <h3>Telefon & E-post</h3>
           <p>
-            <a href="tel:+47XXXXXXXX">+47 XX XX XX XX</a><br>
+            <a href="tel:+4769313705">69 31 37 05</a><br>
             <a href="mailto:hei@cactus-fredrikstad.no">hei@cactus-fredrikstad.no</a>
           </p>
         </div>
@@ -1453,13 +1599,17 @@
         </div>
         <div class="contact-actions">
           <a href="https://www.facebook.com/profile.php?id=100063639846757" target="_blank" rel="noopener" class="btn btn-facebook">Følg oss på Facebook</a>
-          <a href="tel:+47XXXXXXXX" class="btn btn-primary">Ring oss</a>
+          <a href="tel:+4769313705" class="btn btn-primary">Ring oss</a>
         </div>
       </div>
 
       <div class="contact-map reveal">
-        <div class="contact-map-pin"></div>
-        <p>Legg til Google Maps embed med restaurantens adresse her</p>
+        <iframe
+          src="https://maps.google.com/maps?q=Nygaardsgata+21,+1606+Fredrikstad,+Norway&t=&z=16&ie=UTF8&iwloc=&output=embed"
+          allowfullscreen="" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Cactus Cafe & Restaurant – Nygaardsgata 21, Fredrikstad">
+        </iframe>
       </div>
     </div>
   </div>
@@ -1469,15 +1619,7 @@
 <footer>
   <div class="container footer-inner">
     <div class="footer-logo">
-      <svg width="18" height="24" viewBox="0 0 20 28" fill="white" aria-hidden="true">
-        <rect x="8" y="2" width="4" height="22" rx="2"/>
-        <rect x="1" y="11" width="7" height="3.5" rx="1.75"/>
-        <rect x="1" y="7" width="3.5" height="7.5" rx="1.75"/>
-        <rect x="12" y="14" width="7" height="3.5" rx="1.75"/>
-        <rect x="15.5" y="10" width="3.5" height="7.5" rx="1.75"/>
-        <rect x="7" y="24" width="6" height="2.5" rx="1.25"/>
-      </svg>
-      Cactus
+      <img src="images/logo.png" alt="Cactus" style="height:36px; width:auto; border-radius:4px;" />
     </div>
     <ul class="footer-links">
       <li><a href="#meny">Meny</a></li>
