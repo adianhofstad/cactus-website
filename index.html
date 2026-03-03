@@ -18,7 +18,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;0,9..144,900;1,9..144,300;1,9..144,400;1,9..144,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <script type="application/ld+json">
   {
@@ -46,790 +46,409 @@
   </script>
 
   <style>
-    /* ── Reset & Variables ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --red:       #C8281A;
-      --red-dark:  #A01F12;
-      --yellow:    #F5C132;
-      --orange:    #E07A2F;
-      --green:     #2E7D32;
-      --bg:        #FFFBF5;
-      --bg2:       #FEF3E2;
-      --card:      #FFFEF9;
-      --border:    rgba(160,90,20,0.13);
-      --text:      #1C1006;
-      --muted:     #6B5140;
-      --radius:    8px;
-      --shadow:    0 2px 18px rgba(120,60,0,0.1);
-      --shadow-lg: 0 8px 40px rgba(120,60,0,0.16);
-      --nav-h:     68px;
-      --ease:      0.25s ease;
+      --gold:        #D4A24E;
+      --gold-light:  #E8C476;
+      --gold-dim:    rgba(212,162,78,0.15);
+      --gold-border: rgba(212,162,78,0.25);
+      --terra:       #C44B2B;
+      --terra-dim:   rgba(196,75,43,0.12);
+      --green:       #4A7C59;
+      --green-dim:   rgba(74,124,89,0.12);
+      --bg:          #1A1510;
+      --bg2:         #211C15;
+      --bg3:         #2A2319;
+      --card:        #241E17;
+      --card-h:      #2D261D;
+      --border:      rgba(212,162,78,0.08);
+      --border-h:    rgba(212,162,78,0.18);
+      --text:        #F0E6D6;
+      --text-dim:    rgba(240,230,214,0.65);
+      --muted:       #8C7B66;
+      --radius:      6px;
+      --ease:        cubic-bezier(0.4, 0, 0.2, 1);
+      --nav-h:       70px;
     }
 
     html { scroll-behavior: smooth; }
-
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Outfit', sans-serif;
       color: var(--text);
       background: var(--bg);
       line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    section[id] { scroll-margin-top: calc(var(--nav-h) + 16px); }
+
+    body::after {
+      content: '';
+      position: fixed; inset: 0; z-index: 9999;
+      pointer-events: none; opacity: 0.018;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 256px;
     }
 
-    /* ── Typography ── */
-    h1, h2, h3 { font-family: 'Playfair Display', serif; line-height: 1.2; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: rgba(212,162,78,0.25); border-radius: 4px; }
+
+    h1, h2, h3 { font-family: 'Fraunces', serif; line-height: 1.15; }
 
     .label {
       display: inline-block;
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--red);
-      background: rgba(200,40,26,0.09);
-      padding: 0.3rem 0.9rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--gold);
+      padding: 0.35rem 1rem;
+      border: 1px solid var(--gold-border);
       border-radius: 50px;
-      border: 1px solid rgba(200,40,26,0.18);
     }
-    /* White label variant for dark sections */
-    .label-light {
-      display: inline-block;
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--yellow);
-      background: rgba(245,193,50,0.12);
-      padding: 0.3rem 0.9rem;
-      border-radius: 50px;
-      border: 1px solid rgba(245,193,50,0.25);
+    .section-title {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700; letter-spacing: -0.025em;
     }
-
-    .section-title { font-size: clamp(1.9rem, 4.5vw, 3rem); font-weight: 700; letter-spacing: -0.02em; }
-    .section-sub { font-size: 1rem; color: var(--muted); max-width: 520px; line-height: 1.75; }
-
+    .section-title em { font-style: italic; font-weight: 400; color: var(--gold); }
+    .section-sub { font-size: 0.95rem; color: var(--muted); max-width: 480px; line-height: 1.8; }
     .divider {
-      width: 56px; height: 3px;
-      background: linear-gradient(90deg, var(--red) 0%, var(--orange) 60%, var(--yellow) 100%);
-      border-radius: 2px;
-      margin: 0.75rem 0 1.25rem;
-    }
-    .divider-light {
-      width: 56px; height: 3px;
-      background: linear-gradient(90deg, var(--yellow) 0%, var(--orange) 100%);
-      border-radius: 2px;
-      margin: 0.75rem 0 1.25rem;
+      width: 48px; height: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--terra));
+      border-radius: 2px; margin: 1rem 0 1.5rem;
     }
     .center { text-align: center; }
-    .center .divider { margin: 0.75rem auto 1.25rem; }
+    .center .divider { margin: 1rem auto 1.5rem; }
     .center .section-sub { margin: 0 auto; }
 
-    /* ── Layout ── */
-    .container { max-width: 1140px; margin: 0 auto; padding: 0 1.5rem; }
-    section { padding: 5rem 0; }
-    /* Section backgrounds set individually */
-    #om-oss   { background: #2B0E00; border-top: 3px solid rgba(200,40,26,0.6); }
-    #anmeldelser {
-      background-color: #FEF3E2;
-      background-image: repeating-linear-gradient(
-        -45deg,
-        rgba(200,40,26,0.025) 0px, rgba(200,40,26,0.025) 1px,
-        transparent 1px, transparent 28px
-      );
-    }
-    #kontakt  { background: #FEF3E2; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+    section { padding: 6rem 0; }
 
-    /* ── Buttons ── */
     .btn {
       display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.8rem 1.9rem;
-      border-radius: var(--radius);
-      font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.9rem;
-      cursor: pointer; border: none; text-decoration: none;
-      transition: background var(--ease), transform var(--ease), box-shadow var(--ease);
-      letter-spacing: 0.02em;
+      padding: 0.75rem 1.8rem; border-radius: var(--radius);
+      font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 0.85rem;
+      cursor: pointer; border: none; transition: all 0.3s var(--ease); letter-spacing: 0.03em;
     }
-    .btn-primary { background: var(--red); color: #fff; }
-    .btn-primary:hover { background: var(--red-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(214,40,40,0.3); }
-    .btn-ghost { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.45); }
-    .btn-ghost:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+    .btn-primary { background: var(--gold); color: var(--bg); }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212,162,78,0.25); }
+    .btn-ghost { background: transparent; color: var(--text); border: 1.5px solid rgba(240,230,214,0.2); }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
     .btn-facebook { background: #1877F2; color: #fff; }
-    .btn-facebook:hover { background: #0d65d9; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(24,119,242,0.3); }
+    .btn-facebook:hover { background: #0d65d9; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(24,119,242,0.25); }
 
-    /* ─────────────────────────────────────
-       NAVBAR
-    ───────────────────────────────────── */
+    /* ── Fiesta Stripe ── */
+    .fiesta-stripe {
+      height: 3px;
+      background: linear-gradient(90deg, var(--terra), var(--gold), var(--green), var(--terra));
+      background-size: 200% 100%;
+      animation: stripeScroll 6s linear infinite;
+    }
+    @keyframes stripeScroll { 0% { background-position: 0% 0%; } 100% { background-position: 200% 0%; } }
+
+    /* ── Navbar ── */
     #navbar {
-      position: fixed; top: 4px; left: 0; right: 0;
+      position: fixed; top: 3px; left: 0; right: 0;
       height: var(--nav-h);
-      background: #FFFBF5;
-      border-bottom: 2px solid rgba(200,40,26,0.12);
-      z-index: 1000;
-      transition: box-shadow var(--ease);
+      background: rgba(26,21,16,0.88);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000; transition: box-shadow 0.3s var(--ease);
     }
-    #navbar.scrolled { box-shadow: var(--shadow); }
-
-    .nav-inner {
-      display: flex; align-items: center; justify-content: space-between;
-      height: 100%;
-    }
-
-    .nav-logo {
-      display: flex; align-items: center;
-      text-decoration: none;
-    }
-    .nav-logo img {
-      height: 48px;
-      width: auto;
-      display: block;
-    }
-
-    .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+    #navbar.scrolled { box-shadow: 0 4px 40px rgba(0,0,0,0.5); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 100%; }
+    .nav-logo { display: flex; align-items: center; }
+    .nav-logo img { height: 44px; width: auto; }
+    .nav-links { display: flex; align-items: center; gap: 2.2rem; list-style: none; }
     .nav-links a {
-      text-decoration: none; font-size: 0.88rem; font-weight: 500;
-      color: var(--text); position: relative;
-      transition: color var(--ease);
+      font-size: 0.82rem; font-weight: 500; color: var(--muted);
+      letter-spacing: 0.04em; position: relative; transition: color 0.3s var(--ease);
     }
     .nav-links a::after {
-      content: ''; position: absolute; bottom: -3px; left: 0; right: 0;
-      height: 2px; background: var(--red); border-radius: 1px;
-      transform: scaleX(0); transition: transform var(--ease);
+      content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+      height: 1.5px; background: var(--gold); border-radius: 1px;
+      transform: scaleX(0); transform-origin: right; transition: transform 0.35s var(--ease);
     }
-    .nav-links a:hover { color: var(--red); }
-    .nav-links a:hover::after { transform: scaleX(1); }
-    .nav-cta { margin-left: 1rem; }
-
-    /* Hamburger */
-    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 6px; }
-    .hamburger span { display: block; width: 24px; height: 2px; background: var(--text); border-radius: 2px; transition: transform var(--ease), opacity var(--ease); }
-    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
+    .nav-cta { margin-left: 0.8rem; }
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 6px;
+    }
+    .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--text); border-radius: 2px; transition: transform 0.3s var(--ease), opacity 0.2s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
     .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
     .mobile-menu {
       display: none; position: fixed;
-      top: var(--nav-h); left: 0; right: 0;
-      background: var(--bg); border-bottom: 1px solid var(--border);
-      padding: 1.5rem; z-index: 999; box-shadow: var(--shadow-lg);
+      top: calc(var(--nav-h) + 3px); left: 0; right: 0; bottom: 0;
+      background: rgba(26,21,16,0.98); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      padding: 2rem 1.5rem; z-index: 999; flex-direction: column; gap: 0;
     }
-    .mobile-menu.open { display: flex; flex-direction: column; gap: 1rem; }
-    .mobile-menu a { text-decoration: none; font-size: 1rem; font-weight: 500; color: var(--text); padding: 0.5rem 0; border-bottom: 1px solid var(--border); transition: color var(--ease); }
-    .mobile-menu a:hover { color: var(--red); }
-    .mobile-menu .btn { margin-top: 0.5rem; justify-content: center; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-size: 1.1rem; font-weight: 500; color: var(--muted); padding: 1rem 0; border-bottom: 1px solid var(--border); transition: color 0.2s; }
+    .mobile-menu a:hover { color: var(--gold); }
+    .mobile-menu .btn { margin-top: 1.5rem; justify-content: center; }
 
-    /* ─────────────────────────────────────
-       HERO
-    ───────────────────────────────────── */
-    #hjem {
-      min-height: 100vh;
-      display: flex; align-items: center;
-      position: relative;
-      background: url('images/hero.jpg') center center / cover no-repeat;
-      overflow: hidden;
+    /* ── Hero ── */
+    #hjem { min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; }
+    .hero-img { position: absolute; inset: 0; background: url('images/hero.jpg') center center / cover no-repeat; }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(105deg, rgba(26,21,16,0.92) 0%, rgba(26,21,16,0.6) 50%, rgba(26,21,16,0.3) 100%);
     }
-
-    /* Dark overlay with warm tint */
-    .hero-bg {
-      position: absolute; inset: 0; pointer-events: none;
-      background: linear-gradient(
-        105deg,
-        rgba(30,5,0,0.82) 0%,
-        rgba(80,20,0,0.6) 55%,
-        rgba(30,5,0,0.2) 100%
-      );
+    .hero-vignette {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 80% 50%, transparent 0%, rgba(26,21,16,0.5) 100%),
+        linear-gradient(to top, rgba(26,21,16,0.7) 0%, transparent 35%);
     }
-
-    /* Subtle vignette bottom */
-    .hero-pattern {
-      position: absolute; inset: 0; pointer-events: none;
-      background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 40%);
-    }
-
-    .hero-content { position: relative; z-index: 1; max-width: 680px; }
-
+    .hero-content { position: relative; z-index: 2; max-width: 640px; }
     .hero-origin {
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(245,200,66,0.8);
-      margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
+      font-family: 'Outfit', sans-serif; font-size: 0.68rem; font-weight: 600;
+      letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold);
+      margin-bottom: 1.8rem; display: flex; align-items: center; gap: 0.8rem;
     }
-    .hero-origin::before {
-      content: '';
-      display: inline-block;
-      width: 28px; height: 1.5px;
-      background: rgba(245,200,66,0.6);
-      border-radius: 1px;
-    }
-
+    .hero-origin::before { content: ''; width: 32px; height: 1px; background: var(--gold-border); }
     .hero-title {
-      font-size: clamp(3rem, 8vw, 5.8rem);
-      font-weight: 700; color: #fff;
-      margin-bottom: 1.25rem;
-      line-height: 1.05;
-      letter-spacing: -0.025em;
+      font-size: clamp(3.2rem, 8vw, 5.5rem); font-weight: 800; color: #fff;
+      letter-spacing: -0.03em; line-height: 1.02; margin-bottom: 1.5rem;
     }
-    .hero-title em {
-      font-style: italic;
-      color: var(--yellow);
-    }
-
+    .hero-title em { font-style: italic; font-weight: 400; color: var(--gold); }
     .hero-tagline {
-      font-size: clamp(1rem, 2vw, 1.1rem);
-      color: rgba(255,255,255,0.7);
-      font-weight: 300;
-      margin-bottom: 2.5rem;
-      max-width: 500px;
-      line-height: 1.9;
-      border-left: 2px solid rgba(245,193,50,0.5);
-      padding-left: 1.1rem;
+      font-size: clamp(0.92rem, 1.8vw, 1.02rem); color: rgba(240,230,214,0.55);
+      font-weight: 300; line-height: 1.9; max-width: 460px; margin-bottom: 2.8rem;
+      border-left: 2px solid var(--gold-border); padding-left: 1.2rem;
     }
-
-    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-
+    .hero-actions { display: flex; gap: 0.8rem; flex-wrap: wrap; }
     .hero-scroll {
-      position: absolute; bottom: 2rem; left: 50%;
-      transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: 6px;
-      color: rgba(255,255,255,0.35);
-      font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
-      animation: scrollBounce 2.5s ease-in-out infinite;
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: rgba(240,230,214,0.25); font-size: 0.62rem; font-weight: 500;
+      letter-spacing: 0.16em; text-transform: uppercase;
     }
-    .hero-scroll svg { opacity: 0.5; }
-
-    @keyframes scrollBounce {
-      0%, 100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(7px); }
+    .scroll-line {
+      width: 1px; height: 36px;
+      background: linear-gradient(to bottom, var(--gold-border), transparent);
+      animation: scrollPulse 2.5s ease-in-out infinite;
     }
+    @keyframes scrollPulse { 0%, 100% { opacity: 1; transform: scaleY(1); } 50% { opacity: 0.4; transform: scaleY(0.7); } }
 
-    /* ─────────────────────────────────────
-       MENY  (accordion)
-    ───────────────────────────────────── */
-    #meny {
-      background-color: #FEF0D6;
-      background-image:
-        radial-gradient(circle, rgba(200,40,26,0.06) 1px, transparent 1px),
-        radial-gradient(circle, rgba(224,122,47,0.04) 1px, transparent 1px);
-      background-size: 32px 32px, 16px 16px;
-      background-position: 0 0, 8px 8px;
-    }
-
-    .accordion {
-      border: 1px solid rgba(200,40,26,0.15);
-      border-radius: calc(var(--radius) * 2);
-      overflow: hidden;
-      box-shadow: 0 4px 24px rgba(120,60,0,0.14);
-    }
-
+    /* ── Menu ── */
+    #meny { background: var(--bg2); border-top: 1px solid var(--border); }
+    .accordion { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
     .accordion-item { border-bottom: 1px solid var(--border); }
     .accordion-item:last-child { border-bottom: none; }
-
     .accordion-header {
-      width: 100%; padding: 1.6rem 2rem;
-      background: #FFFEF9;
-      border: none; cursor: pointer;
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 1rem;
-      transition: background var(--ease);
+      width: 100%; padding: 1.4rem 2rem; background: var(--card);
+      border: none; cursor: pointer; display: flex; align-items: center;
+      justify-content: space-between; gap: 1rem; transition: background 0.25s var(--ease); text-align: left;
     }
-    .accordion-header:hover { background: #FFF5E6; }
-    .accordion-header.active { background: var(--bg); }
-
-    .acc-left { display: flex; align-items: center; gap: 1.25rem; }
-
-    .acc-num {
-      font-family: 'Playfair Display', serif;
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--red);
-      opacity: 0.5;
-      min-width: 22px;
-    }
+    .accordion-header:hover { background: var(--card-h); }
+    .accordion-header.active { background: var(--bg3); }
+    .acc-left { display: flex; align-items: center; gap: 1.2rem; }
+    .acc-num { font-family: 'Fraunces', serif; font-size: 0.75rem; font-weight: 600; color: var(--gold); opacity: 0.4; min-width: 22px; }
     .accordion-header.active .acc-num { opacity: 1; }
-
-    .acc-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: var(--text);
-      transition: color var(--ease);
-    }
-    .accordion-header.active .acc-name { color: var(--red); }
-    .accordion-item:nth-child(1) .accordion-header.active { border-left: 3px solid #C8281A; }
-    .accordion-item:nth-child(2) .accordion-header.active { border-left: 3px solid #E07A2F; }
-    .accordion-item:nth-child(3) .accordion-header.active { border-left: 3px solid #C8281A; }
-    .accordion-item:nth-child(4) .accordion-header.active { border-left: 3px solid #2E7D32; }
-    .accordion-item:nth-child(5) .accordion-header.active { border-left: 3px solid #F5C132; }
-    .accordion-item:nth-child(6) .accordion-header.active { border-left: 3px solid #E07A2F; }
-
+    .acc-name { font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 600; color: var(--text); transition: color 0.2s; }
+    .accordion-header.active .acc-name { color: var(--gold); }
     .acc-right { display: flex; align-items: center; gap: 1rem; }
-
-    .acc-count {
-      font-size: 0.78rem;
-      font-weight: 500;
-      color: var(--muted);
-      letter-spacing: 0.04em;
-    }
-
+    .acc-count { font-size: 0.72rem; font-weight: 500; color: var(--muted); letter-spacing: 0.04em; }
     .acc-toggle {
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      border: 1.5px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-      transition: transform 0.35s ease, border-color var(--ease), background var(--ease);
+      width: 28px; height: 28px; border-radius: 50%;
+      border: 1px solid var(--border); display: flex; align-items: center;
+      justify-content: center; flex-shrink: 0; transition: all 0.35s var(--ease);
     }
-    .acc-toggle svg {
-      transition: stroke var(--ease);
-      stroke: var(--muted);
-    }
-    .accordion-header.active .acc-toggle {
-      transform: rotate(45deg);
-      border-color: var(--red);
-      background: rgba(214,40,40,0.06);
-    }
-    .accordion-header.active .acc-toggle svg { stroke: var(--red); }
-
-    .accordion-body {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .accordion-body.open { max-height: 900px; }
-
-    .accordion-inner {
-      padding: 0.25rem 2rem 2rem;
-      background: #FFFEF9;
-    }
-
-    .menu-divider {
-      width: 100%; height: 1px;
-      background: var(--border);
-      margin-bottom: 1.5rem;
-    }
-
-    .menu-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-      gap: 1rem;
-    }
-
+    .acc-toggle svg { stroke: var(--muted); transition: stroke 0.2s; }
+    .accordion-header.active .acc-toggle { transform: rotate(45deg); border-color: var(--gold-border); background: var(--gold-dim); }
+    .accordion-header.active .acc-toggle svg { stroke: var(--gold); }
+    .accordion-item:nth-child(1) .accordion-header.active { border-left: 3px solid var(--terra); }
+    .accordion-item:nth-child(2) .accordion-header.active { border-left: 3px solid var(--gold); }
+    .accordion-item:nth-child(3) .accordion-header.active { border-left: 3px solid var(--terra); }
+    .accordion-item:nth-child(4) .accordion-header.active { border-left: 3px solid var(--green); }
+    .accordion-item:nth-child(5) .accordion-header.active { border-left: 3px solid var(--gold); }
+    .accordion-item:nth-child(6) .accordion-header.active { border-left: 3px solid var(--terra); }
+    .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.5s var(--ease); }
+    .accordion-body.open { max-height: 2000px; }
+    .accordion-inner { padding: 0.5rem 2rem 2rem; background: var(--bg3); }
+    .menu-divider { width: 100%; height: 1px; background: var(--border); margin-bottom: 1.5rem; }
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.8rem; }
     .menu-card {
-      background: #FFFBF2;
-      border: 1px solid rgba(200,40,26,0.1);
-      border-radius: calc(var(--radius) * 1.5);
-      padding: 1.4rem 1.5rem;
-      transition: transform var(--ease), box-shadow var(--ease), border-color var(--ease);
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 1.3rem 1.4rem; transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
     }
-    .menu-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 36px rgba(120,60,0,0.18);
-      border-color: rgba(200,40,26,0.25);
-    }
-
-    .menu-card-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.05rem; font-weight: 700;
-      margin-bottom: 0.35rem;
-    }
-    .menu-card-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
+    .menu-card:hover { border-color: var(--border-h); transform: translateY(-2px); }
+    .menu-card-name { font-family: 'Fraunces', serif; font-size: 0.98rem; font-weight: 600; margin-bottom: 0.3rem; color: var(--text); }
+    .menu-card-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.65; margin-bottom: 0.9rem; }
     .menu-card-price {
-      display: inline-block;
-      font-size: 0.9rem; font-weight: 700;
-      color: var(--red);
-      background: rgba(200,40,26,0.07);
-      padding: 0.2rem 0.65rem;
-      border-radius: 4px;
-      border: 1px solid rgba(200,40,26,0.12);
+      display: inline-block; font-family: 'Outfit', sans-serif;
+      font-size: 0.82rem; font-weight: 700; color: var(--gold);
+      background: var(--gold-dim); border: 1px solid var(--gold-border);
+      padding: 0.15rem 0.6rem; border-radius: 3px;
     }
-
-    /* ─────────────────────────────────────
-       OM OSS  (dark section)
-    ───────────────────────────────────── */
-    #om-oss {
-      background:
-        radial-gradient(ellipse 80% 60% at 20% 50%, rgba(120,30,0,0.35) 0%, transparent 70%),
-        #1E0700;
-    }
-    #om-oss .section-title { color: #fff; letter-spacing: -0.02em; }
-    #om-oss p { color: rgba(255,255,255,0.65); line-height: 1.9; }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 52% 1fr;
-      gap: 4.5rem;
-      align-items: center;
-    }
-
-    /* Photo with authentic frame treatment */
-    .about-photo {
-      position: relative;
-      border-radius: calc(var(--radius) * 2);
-      overflow: visible;
-    }
-    .about-photo-frame {
-      border-radius: calc(var(--radius) * 2);
-      overflow: hidden;
-      aspect-ratio: 4/3;
-      box-shadow:
-        0 0 0 1px rgba(245,193,50,0.2),
-        0 0 0 8px rgba(245,193,50,0.04),
-        0 24px 70px rgba(0,0,0,0.6);
-      position: relative;
-    }
-    .about-photo-frame::before {
-      content: '';
-      position: absolute;
-      inset: 10px;
-      border: 1px solid rgba(245,193,50,0.22);
-      border-radius: calc(var(--radius) * 1.5);
-      z-index: 2;
-      pointer-events: none;
-    }
-    .about-photo-frame img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.7s ease;
-    }
-    .about-photo-frame:hover img { transform: scale(1.05); }
-
-    /* Year stamp bottom left */
-    .about-year-stamp {
-      position: absolute;
-      bottom: -1.2rem;
-      left: 1.5rem;
-      background: var(--yellow);
-      color: #1C1006;
-      font-family: 'Playfair Display', serif;
-      font-size: 0.82rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.5rem 1.25rem;
-      border-radius: 4px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
-    }
-
-    /* Ornamental separator */
-    .ornamental-sep {
-      display: flex;
-      align-items: center;
-      gap: 0.9rem;
-      margin: 1.1rem 0 1.4rem;
-    }
-    .ornamental-sep::before,
-    .ornamental-sep::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(245,193,50,0.35));
-    }
-    .ornamental-sep::after {
-      background: linear-gradient(90deg, rgba(245,193,50,0.35), transparent);
-    }
-    .ornamental-sep span {
-      width: 6px; height: 6px;
-      background: var(--yellow);
-      border-radius: 1px;
-      transform: rotate(45deg);
-      opacity: 0.7;
-      flex-shrink: 0;
-    }
-
-    /* Stats as a bottom band */
-    .about-stats {
-      display: flex;
-      gap: 0;
-      margin-top: 2rem;
-      border: 1px solid rgba(245,193,50,0.15);
-      border-radius: var(--radius);
-      overflow: hidden;
-    }
-    .stat-item {
-      flex: 1;
-      padding: 1rem;
-      text-align: center;
-      border-right: 1px solid rgba(245,193,50,0.12);
-      background: rgba(245,193,50,0.03);
-    }
-    .stat-item:last-child { border-right: none; }
-    .stat-num {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.7rem; font-weight: 700;
-      color: var(--yellow);
-      line-height: 1;
-      margin-bottom: 0.25rem;
-    }
-    .stat-num span { font-size: 1rem; margin-left: 1px; }
-    .stat-label { font-size: 0.68rem; color: rgba(255,255,255,0.35); letter-spacing: 0.08em; text-transform: uppercase; }
-
-    /* Feature tags – compact pill row */
-    .about-tags {
-      display: flex; flex-wrap: wrap; gap: 0.6rem;
-      margin-top: 1.75rem;
-    }
-    .about-tag {
-      display: flex; align-items: center; gap: 0.45rem;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 50px;
-      padding: 0.35rem 0.9rem;
-      font-size: 0.78rem; font-weight: 500;
-      color: rgba(255,255,255,0.7);
-      letter-spacing: 0.02em;
-    }
-    .about-tag svg { flex-shrink: 0; }
-    .about-visual-text .small {
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.35);
-      margin-top: 0.5rem;
-    }
-
-    .about-stats {
-      display: flex; gap: 2rem;
-      margin: 1.75rem 0 0.5rem;
-      padding: 1.5rem 0;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-    .stat-item { flex: 1; }
-    .stat-num {
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem; font-weight: 700;
-      color: var(--yellow);
-      line-height: 1;
-      margin-bottom: 0.3rem;
-    }
-    .stat-num span { font-size: 1.1rem; margin-left: 1px; }
-    .stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.45); letter-spacing: 0.04em; }
-
-    .about-features {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 1.25rem; margin-top: 2rem;
-    }
-
-    .feature-item { display: flex; align-items: flex-start; gap: 0.875rem; }
-
-    .feature-icon {
-      width: 38px; height: 38px;
-      border-radius: 50%;
-      background: rgba(214,40,40,0.08);
-      border: 1.5px solid rgba(214,40,40,0.15);
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .feature-icon svg { display: block; }
-
-    .feature-text h4 { font-size: 0.88rem; font-weight: 600; margin-bottom: 0.2rem; font-family: 'Inter', sans-serif; }
-    .feature-text p { font-size: 0.78rem; color: var(--muted); }
-
-    /* ─────────────────────────────────────
-       ANMELDELSER
-    ───────────────────────────────────── */
-    .reviews-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .review-card {
-      background: #FFFBF2;
-      border: 1px solid rgba(200,40,26,0.1);
-      border-radius: calc(var(--radius) * 2);
-      padding: 2rem;
-      box-shadow: 0 2px 20px rgba(120,60,0,0.08);
-      transition: transform var(--ease), box-shadow var(--ease);
-    }
-    .review-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(120,60,0,0.14); }
-
-    .review-stars { display: flex; gap: 3px; margin-bottom: 1rem; }
-    .star {
-      width: 14px; height: 14px;
-      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-      background: var(--yellow);
-      flex-shrink: 0;
-    }
-
-    .review-card { position: relative; }
-    .review-card::before {
-      content: '\201C';
-      position: absolute;
-      top: 1.25rem; left: 1.75rem;
-      font-family: 'Playfair Display', serif;
-      font-size: 4rem;
-      color: rgba(200,40,26,0.1);
-      line-height: 1;
-      pointer-events: none;
-    }
-    .review-text { font-style: italic; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.8; font-size: 0.95rem; padding-top: 0.5rem; }
-
-    .review-author { display: flex; align-items: center; gap: 0.75rem; }
-    .review-avatar {
-      width: 40px; height: 40px; border-radius: 50%;
-      background: var(--red); color: #fff;
-      font-weight: 600; font-size: 0.9rem;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .review-name { font-weight: 600; font-size: 0.9rem; }
-    .review-date { font-size: 0.78rem; color: var(--muted); }
-
-    /* ─────────────────────────────────────
-       KONTAKT
-    ───────────────────────────────────── */
-    .contact-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 5rem; align-items: start;
-    }
-
-    .contact-info { display: flex; flex-direction: column; gap: 2rem; }
-
-    .contact-block h3 {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.72rem; font-weight: 600;
-      letter-spacing: 0.16em; text-transform: uppercase;
-      color: var(--red); margin-bottom: 0.6rem;
-    }
-    .contact-block p { font-size: 0.975rem; line-height: 1.85; }
-    .contact-block a { color: var(--text); text-decoration: none; }
-    .contact-block a:hover { color: var(--red); }
-
-    .hours-table { width: 100%; border-collapse: collapse; }
-    .hours-table td { padding: 0.45rem 0; font-size: 0.925rem; }
-    .hours-table td:last-child { text-align: right; font-weight: 500; color: var(--muted); }
-    .hours-table tr:not(:last-child) td { border-bottom: 1px solid var(--border); }
-
-    .contact-map {
-      border-radius: calc(var(--radius) * 2.5);
-      overflow: hidden;
-      aspect-ratio: 4/3;
-      box-shadow: var(--shadow-lg);
-    }
-    .contact-map iframe {
-      width: 100%; height: 100%;
-      border: none; display: block;
-    }
-
-    .contact-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-
-    /* ── Delivery buttons on menu cards ── */
-    .menu-card-delivery {
-      display: flex; gap: 0.4rem; margin-top: 0.75rem; flex-wrap: wrap;
-    }
+    .menu-card-delivery { display: flex; gap: 0.35rem; margin-top: 0.65rem; flex-wrap: wrap; }
     .btn-delivery {
-      display: inline-flex; align-items: center; gap: 0.3rem;
-      padding: 0.3rem 0.65rem;
-      border-radius: 4px;
-      font-size: 0.7rem; font-weight: 600;
-      text-decoration: none; letter-spacing: 0.02em;
-      transition: opacity var(--ease), transform var(--ease);
+      display: inline-flex; align-items: center; gap: 0.25rem;
+      padding: 0.22rem 0.55rem; border-radius: 3px;
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.02em;
+      transition: opacity 0.2s, transform 0.2s;
     }
     .btn-delivery:hover { opacity: 0.85; transform: translateY(-1px); }
-    .btn-wolt   { background: #009DE0; color: #fff; }
+    .btn-wolt { background: #009DE0; color: #fff; }
     .btn-foodora { background: #D0006F; color: #fff; }
 
-    /* ─────────────────────────────────────
-       FOOTER
-    ───────────────────────────────────── */
-    footer {
-      background: #111;
-      color: rgba(255,255,255,0.5);
-      padding: 2.5rem 0;
+    /* ── Om Oss ── */
+    #om-oss {
+      background: radial-gradient(ellipse 70% 50% at 15% 50%, rgba(196,75,43,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 85% 30%, rgba(212,162,78,0.06) 0%, transparent 60%), var(--bg);
+      border-top: 1px solid var(--border);
     }
-    .footer-inner {
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 1.25rem;
+    #om-oss .section-title { color: #fff; }
+    #om-oss p { color: var(--text-dim); line-height: 1.9; }
+    .about-grid { display: grid; grid-template-columns: 50% 1fr; gap: 4.5rem; align-items: center; }
+    .about-photo { position: relative; }
+    .about-photo-frame {
+      border-radius: var(--radius); overflow: hidden; aspect-ratio: 4/3; position: relative;
+      box-shadow: 0 0 0 1px var(--gold-border), 0 30px 80px rgba(0,0,0,0.5);
     }
-    .footer-logo {
-      display: flex; align-items: center; gap: 0.5rem;
-      font-family: 'Playfair Display', serif;
-      font-size: 1.2rem; font-weight: 700; color: #fff;
+    .about-photo-frame::before {
+      content: ''; position: absolute; inset: 8px;
+      border: 1px solid rgba(212,162,78,0.15);
+      border-radius: calc(var(--radius) - 2px); z-index: 2; pointer-events: none;
     }
-    .footer-links { display: flex; gap: 1.5rem; list-style: none; }
-    .footer-links a {
-      color: rgba(255,255,255,0.5); text-decoration: none;
-      font-size: 0.82rem; transition: color var(--ease);
+    .about-photo-frame img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s var(--ease); }
+    .about-photo-frame:hover img { transform: scale(1.04); }
+    .about-year-stamp {
+      position: absolute; bottom: -0.8rem; left: 1.5rem;
+      background: var(--gold); color: var(--bg);
+      font-family: 'Outfit', sans-serif; font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.45rem 1.1rem; border-radius: 3px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
     }
-    .footer-links a:hover { color: var(--yellow); }
-    .footer-copy { font-size: 0.78rem; }
+    .ornamental-sep { display: flex; align-items: center; gap: 0.9rem; margin: 1rem 0 1.5rem; }
+    .ornamental-sep::before, .ornamental-sep::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-border)); }
+    .ornamental-sep::after { background: linear-gradient(90deg, var(--gold-border), transparent); }
+    .ornamental-sep span { width: 5px; height: 5px; background: var(--gold); border-radius: 1px; transform: rotate(45deg); opacity: 0.6; flex-shrink: 0; }
+    .about-stats {
+      display: flex; gap: 2rem; margin: 2rem 0 0.5rem; padding: 1.3rem 0;
+      border-top: 1px solid rgba(240,230,214,0.06); border-bottom: 1px solid rgba(240,230,214,0.06);
+    }
+    .stat-item { flex: 1; }
+    .stat-num { font-family: 'Fraunces', serif; font-size: 2rem; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 0.25rem; }
+    .stat-num span { font-size: 1rem; margin-left: 2px; }
+    .stat-label { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.06em; }
+    .about-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.75rem; }
+    .about-tag {
+      display: flex; align-items: center; gap: 0.4rem;
+      background: rgba(240,230,214,0.04); border: 1px solid rgba(240,230,214,0.08);
+      border-radius: 50px; padding: 0.3rem 0.85rem;
+      font-size: 0.74rem; font-weight: 500; color: var(--text-dim); letter-spacing: 0.02em;
+    }
+    .about-tag svg { flex-shrink: 0; }
 
-    /* ─────────────────────────────────────
-       Scroll reveal
-    ───────────────────────────────────── */
-    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    /* ── Anmeldelser ── */
+    #anmeldelser { background: var(--bg2); border-top: 1px solid var(--border); }
+    .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+    .review-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 2rem 1.8rem; position: relative;
+      transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
+    }
+    .review-card:hover { border-color: var(--border-h); transform: translateY(-3px); }
+    .review-card::before {
+      content: '\201C'; position: absolute; top: 1rem; left: 1.5rem;
+      font-family: 'Fraunces', serif; font-size: 4rem; line-height: 1;
+      color: var(--gold-dim); pointer-events: none;
+    }
+    .review-stars { display: flex; gap: 3px; margin-bottom: 1rem; }
+    .star {
+      width: 12px; height: 12px;
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+      background: var(--gold); flex-shrink: 0;
+    }
+    .review-text {
+      font-family: 'Fraunces', serif; font-style: italic; font-weight: 300;
+      color: var(--text-dim); margin-bottom: 1.5rem; line-height: 1.8; font-size: 0.92rem; padding-top: 0.5rem;
+    }
+    .review-author { display: flex; align-items: center; gap: 0.75rem; }
+    .review-avatar {
+      width: 38px; height: 38px; border-radius: 50%; background: var(--terra); color: #fff;
+      font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 0.82rem;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .review-name { font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 0.85rem; }
+    .review-date { font-size: 0.72rem; color: var(--muted); margin-top: 0.1rem; }
+
+    /* ── Kontakt ── */
+    #kontakt { background: var(--bg); border-top: 1px solid var(--border); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 4rem; align-items: start; }
+    .contact-info { display: flex; flex-direction: column; gap: 1.8rem; }
+    .contact-block h3 {
+      font-family: 'Outfit', sans-serif; font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem;
+    }
+    .contact-block p { font-size: 0.93rem; line-height: 1.85; color: var(--text-dim); }
+    .contact-block a { color: var(--text-dim); transition: color 0.2s; }
+    .contact-block a:hover { color: var(--gold); }
+    .hours-table { width: 100%; border-collapse: collapse; }
+    .hours-table td { padding: 0.5rem 0; font-size: 0.88rem; color: var(--text-dim); }
+    .hours-table td:last-child { text-align: right; font-weight: 500; color: var(--muted); }
+    .hours-table tr:not(:last-child) td { border-bottom: 1px solid var(--border); }
+    .contact-actions { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+    .contact-map {
+      border-radius: var(--radius); overflow: hidden; aspect-ratio: 4/3;
+      border: 1px solid var(--border); box-shadow: 0 12px 48px rgba(0,0,0,0.35);
+    }
+    .contact-map iframe {
+      width: 100%; height: 100%; border: none; display: block;
+      filter: grayscale(0.3) brightness(0.85) contrast(1.1);
+    }
+
+    /* ── Footer ── */
+    footer { background: var(--bg); border-top: 1px solid var(--border); padding: 2.5rem 0; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.2rem; }
+    .footer-logo { display: flex; align-items: center; gap: 0.5rem; }
+    .footer-logo img { height: 32px; width: auto; border-radius: 3px; }
+    .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+    .footer-links a { color: var(--muted); font-size: 0.78rem; font-weight: 500; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-copy { font-size: 0.72rem; color: rgba(240,230,214,0.2); }
+
+    /* ── Reveal ── */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    /* ─────────────────────────────────────
-       RESPONSIVE
-    ───────────────────────────────────── */
+    /* ── Responsive ── */
     @media (max-width: 900px) {
       .nav-links, .nav-cta { display: none; }
       .hamburger { display: flex; }
       .about-grid { grid-template-columns: 1fr; gap: 3rem; }
       .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-      .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
-      .gallery-item:first-child { grid-row: span 1; }
-      .accordion-inner { padding: 0.25rem 1.25rem 1.5rem; }
-      .accordion-header { padding: 1.25rem 1.25rem; }
-    }
-
-    @media (max-width: 600px) {
-      section { padding: 3.5rem 0; }
-      .gallery-grid { grid-template-columns: 1fr 1fr; }
-      .gallery-item { height: 160px; }
-      .about-stats {
-      display: flex; gap: 2rem;
-      margin: 1.75rem 0 0.5rem;
-      padding: 1.5rem 0;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-    .stat-item { flex: 1; }
-    .stat-num {
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem; font-weight: 700;
-      color: var(--yellow);
-      line-height: 1;
-      margin-bottom: 0.3rem;
-    }
-    .stat-num span { font-size: 1.1rem; margin-left: 1px; }
-    .stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.45); letter-spacing: 0.04em; }
-
-    .about-features { grid-template-columns: 1fr; }
-      .footer-inner { flex-direction: column; align-items: flex-start; }
       .reviews-grid { grid-template-columns: 1fr; }
-      .hero-cactus { width: 55vw; opacity: 0.06; }
+      .accordion-inner { padding: 0.5rem 1.25rem 1.5rem; }
+      .accordion-header { padding: 1.2rem 1.25rem; }
+    }
+    @media (max-width: 600px) {
+      section { padding: 4rem 0; }
+      .about-stats { gap: 1rem; }
+      .stat-num { font-size: 1.5rem; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
       .acc-count { display: none; }
+      .menu-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-<!-- ═══════════════════ NAVBAR ═══════════════════ -->
-<!-- Fiesta stripe -->
-<div style="height:4px; background: linear-gradient(90deg, #C8281A 0%, #E07A2F 33%, #F5C132 66%, #C8281A 100%); background-size: 200% 100%; animation: stripeScroll 4s linear infinite;"></div>
-
-<style>
-@keyframes stripeScroll {
-  0% { background-position: 0% 0%; }
-  100% { background-position: 200% 0%; }
-}
-</style>
+<div class="fiesta-stripe"></div>
 
 <nav id="navbar">
   <div class="container nav-inner">
-    <a href="#hjem" class="nav-logo">
-      <img src="images/logo.png" alt="Cactus Cafe & Restaurant" />
-    </a>
+    <a href="#hjem" class="nav-logo"><img src="images/logo.png" alt="Cactus Cafe & Restaurant" /></a>
     <ul class="nav-links">
       <li><a href="#meny">Meny</a></li>
       <li><a href="#om-oss">Om oss</a></li>
@@ -837,9 +456,7 @@
       <li><a href="#kontakt">Kontakt</a></li>
     </ul>
     <a href="tel:+4769313705" class="btn btn-primary nav-cta">Bestill bord</a>
-    <button class="hamburger" id="hamburger" aria-label="Meny">
-      <span></span><span></span><span></span>
-    </button>
+    <button class="hamburger" id="hamburger" aria-label="Meny"><span></span><span></span><span></span></button>
   </div>
 </nav>
 
@@ -851,876 +468,218 @@
   <a href="tel:+4769313705" class="btn btn-primary">Bestill bord</a>
 </div>
 
-<!-- ═══════════════════ HERO ═══════════════════ -->
 <section id="hjem">
-  <div class="hero-bg"></div>
-  <div class="hero-pattern"></div>
-
+  <div class="hero-img"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-vignette"></div>
   <div class="container">
     <div class="hero-content">
-      <p class="hero-origin">Meksikansk restaurant &nbsp;&bull;&nbsp; Fredrikstad</p>
-      <h1 class="hero-title">
-        Ekte smaker,<br><em>varm atmosfære</em>
-      </h1>
-      <p class="hero-tagline">
-        Autentisk meksikansk mat laget med kjærlighet og de beste råvarene.
-        Tacos, burritos, enchiladas og ferske margaritas – rett i hjertet av Fredrikstad.
-      </p>
-      <div class="hero-actions">
+      <p class="hero-origin reveal">Meksikansk restaurant &nbsp;&bull;&nbsp; Fredrikstad</p>
+      <h1 class="hero-title reveal">Ekte smaker,<br><em>varm atmosfære</em></h1>
+      <p class="hero-tagline reveal">Autentisk meksikansk mat laget med kjærlighet og de beste råvarene. Tacos, burritos, enchiladas og ferske margaritas – rett i hjertet av Fredrikstad.</p>
+      <div class="hero-actions reveal">
         <a href="#meny" class="btn btn-primary">Se menyen</a>
         <a href="tel:+4769313705" class="btn btn-ghost">Bestill bord</a>
       </div>
     </div>
   </div>
-
-  <div class="hero-scroll">
-    Scroll
-    <svg width="14" height="20" viewBox="0 0 14 20" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round">
-      <path d="M7 3v14M2 13l5 5 5-5"/>
-    </svg>
-  </div>
+  <div class="hero-scroll">Scroll<div class="scroll-line"></div></div>
 </section>
 
-<!-- ═══════════════════ MENY ═══════════════════ -->
 <section id="meny">
   <div class="container">
-    <div class="center" style="margin-bottom: 3rem;">
-      <span class="label">Vår meny</span>
-      <h2 class="section-title" style="margin-top: 0.4rem;">Smak på Mexico</h2>
-      <div class="divider"></div>
-      <p class="section-sub">Alle retter tilberedes med ferske råvarer. Spør oss gjerne om allergener.</p>
+    <div class="center" style="margin-bottom:3rem;">
+      <span class="label reveal">Vår meny</span>
+      <h2 class="section-title reveal" style="margin-top:0.5rem;">Smak på <em>Mexico</em></h2>
+      <div class="divider reveal"></div>
+      <p class="section-sub reveal">Alle retter tilberedes med ferske råvarer. Spør oss gjerne om allergener.</p>
     </div>
-
-    <div class="accordion">
-
-      <!-- 01 Forretter & Småretter -->
-      <div class="accordion-item">
-        <button class="accordion-header" data-target="acc-forretter">
-          <div class="acc-left">
-            <span class="acc-num">01</span>
-            <span class="acc-name">Forretter & Småretter</span>
-          </div>
-          <div class="acc-right">
-            <span class="acc-count">6 retter</span>
-            <span class="acc-toggle">
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
-            </span>
-          </div>
-        </button>
-        <div class="accordion-body" id="acc-forretter">
-          <div class="accordion-inner">
-            <div class="menu-divider"></div>
-            <div class="menu-grid">
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Tortilla Pizza</div>
-                <div class="menu-card-desc">Hvetetortilla med tomatsaus, ost, kjøttdeig og jalapeño. Allergener: melk, hvete.</div>
-                <div class="menu-card-price">89 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Ostegratinerte Nachos</div>
-                <div class="menu-card-desc">Med salsa og rømme. Allergener: melk.</div>
-                <div class="menu-card-price">98 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Guacamole Nachos</div>
-                <div class="menu-card-desc">Hjemmelaget avocadodip med varme maischips.</div>
-                <div class="menu-card-price">85 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Dipmix</div>
-                <div class="menu-card-desc">Maischips med salsa.</div>
-                <div class="menu-card-price">69 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Hvitløkbrød</div>
-                <div class="menu-card-desc">Husets nybakte hvitløksbread. Allergener: egg, hvete, melk.</div>
-                <div class="menu-card-price">55 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Quesadilla</div>
-                <div class="menu-card-desc">Ostegratinert med jalapeño, tacosaus og rømme. Allergener: melk, hvete.</div>
-                <div class="menu-card-price">109 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 02 Meksikanske retter -->
-      <div class="accordion-item">
-        <button class="accordion-header" data-target="acc-mex">
-          <div class="acc-left">
-            <span class="acc-num">02</span>
-            <span class="acc-name">Meksikanske Retter</span>
-          </div>
-          <div class="acc-right">
-            <span class="acc-count">12 retter</span>
-            <span class="acc-toggle">
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
-            </span>
-          </div>
-        </button>
-        <div class="accordion-body" id="acc-mex">
-          <div class="accordion-inner">
-            <div class="menu-divider"></div>
-            <div class="menu-grid">
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Enchiladas de Picadillo</div>
-                <div class="menu-card-desc">Tre lag ostegratinerte maistortilla med tacokjøtt. Serveres med ris, salat, rømme og salsa.</div>
-                <div class="menu-card-price">188 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Enchiladas de Pollo</div>
-                <div class="menu-card-desc">Tre lag ostegratinerte maistortilla med marinert kylling. Serveres med ris, salat, rømme og salsa.</div>
-                <div class="menu-card-price">198 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Nachos Mexicano</div>
-                <div class="menu-card-desc">Ovnsgratinerte maischips med hjemmelaget tacokjøtt og ost. Serveres med salat, salsa og rømme.</div>
-                <div class="menu-card-price">179 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Nachos de Pollo</div>
-                <div class="menu-card-desc">Ovnsgratinerte maischips med kyllingfilet og ost. Serveres med salat, salsa og rømme.</div>
-                <div class="menu-card-price">179 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Taco</div>
-                <div class="menu-card-desc">Tre tacokjell med hjemmelaget tacokjøtt, ost og rømme. Serveres med nachos og salsa.</div>
-                <div class="menu-card-price">149 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Burrito Viva Mexico</div>
-                <div class="menu-card-desc">Ovnsgratinert hvetebortilla med tacokjøtt, salat, jalapeño, tacosaus og rømme.</div>
-                <div class="menu-card-price">188 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Burrito de Pollo</div>
-                <div class="menu-card-desc">Ovnsgratinert hvetebortilla med kylling, salat, tacosaus, rømme og husets ris.</div>
-                <div class="menu-card-price">188 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Burrito Vegetariano</div>
-                <div class="menu-card-desc">Ovnsgratinert hvetebortilla med løk, sjampinjong, paprika og mais. Serveres med salat, ris, tacosaus og rømme.</div>
-                <div class="menu-card-price">159 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Combo Burrito</div>
-                <div class="menu-card-desc">Hvetebortilla fylt med tacokjøtt, kylling og ost. Serveres med ris, salat, tacosaus og rømme.</div>
-                <div class="menu-card-price">188 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Fajitas med Kylling</div>
-                <div class="menu-card-desc">Serveres i rustikk stekepanne med paprika og løk, salat, guacamole, salsa, ris, ost og varme tortillas.</div>
-                <div class="menu-card-price">269 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Fajitas med Biff</div>
-                <div class="menu-card-desc">Serveres i rustikk stekepanne med paprika og løk, salat, guacamole, salsa, ris, ost og varme tortillas.</div>
-                <div class="menu-card-price">289 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Combo Fajitas</div>
-                <div class="menu-card-desc">Kylling og biff sammen i rustikk stekepanne med alt tilbehøret. Allergener: melk, hvete.</div>
-                <div class="menu-card-price">279 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 03 Grillretter & Burgere -->
-      <div class="accordion-item">
-        <button class="accordion-header" data-target="acc-grill">
-          <div class="acc-left">
-            <span class="acc-num">03</span>
-            <span class="acc-name">Grillretter & Burgere</span>
-          </div>
-          <div class="acc-right">
-            <span class="acc-count">9 retter</span>
-            <span class="acc-toggle">
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
-            </span>
-          </div>
-        </button>
-        <div class="accordion-body" id="acc-grill">
-          <div class="accordion-inner">
-            <div class="menu-divider"></div>
-            <div class="menu-grid">
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Kyllingfilet i Hvitvinsaus</div>
-                <div class="menu-card-desc">Stekt kyllingfilet med kremet hvitvinssaus, sjampinjong, løk og paprika. Serveres med sesonggrønnsaker og ris.</div>
-                <div class="menu-card-price">229 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Beefsteak Mexicana</div>
-                <div class="menu-card-desc">Stekt indrefilet med mais, paprika, jalapeño og løk i sterk tomatsaus. Valgfri poteter.</div>
-                <div class="menu-card-price">279 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Mexican Burger</div>
-                <div class="menu-card-desc">Hamburger med ost, nachos, salsa, guacamole, salat, sesamboller og pommes frites.</div>
-                <div class="menu-card-price">189 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Biffsnadder</div>
-                <div class="menu-card-desc">Strimlet biff med sjampinjong, løk, paprika og béarnaisesaus. Serveres med valgfri pommes frites.</div>
-                <div class="menu-card-price">219 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Kyllingsnadder med Peppersaus</div>
-                <div class="menu-card-desc">Marinert kyllingfilet med sjampinjong, løk og peppersaus. Serveres med salat og pommes frites.</div>
-                <div class="menu-card-price">219 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Biff</div>
-                <div class="menu-card-desc">Stekt indrefilet med béarnaisesaus, stekte sesonggrønnsaker og valgfri poteter.</div>
-                <div class="menu-card-price">279 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Pepperbiff</div>
-                <div class="menu-card-desc">Stekt indrefilet med peppersaus, sesongens stekte grønnsaker og valgfri poteter.</div>
-                <div class="menu-card-price">279 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Husets Kebab-tallerken</div>
-                <div class="menu-card-desc">Marinert biffkjøtt med hjemmelaget brød, salat, hvitløksaus og pommes frites.</div>
-                <div class="menu-card-price">189 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Husets Kylling Kebab-tallerken</div>
-                <div class="menu-card-desc">Marinert kyllingkjøtt med hjemmelaget brød, salat, hvitløksaus og pommes frites.</div>
-                <div class="menu-card-price">169 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 04 Salater & Wraps -->
-      <div class="accordion-item">
-        <button class="accordion-header" data-target="acc-salat">
-          <div class="acc-left">
-            <span class="acc-num">04</span>
-            <span class="acc-name">Salater & Wraps</span>
-          </div>
-          <div class="acc-right">
-            <span class="acc-count">7 retter</span>
-            <span class="acc-toggle">
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
-            </span>
-          </div>
-        </button>
-        <div class="accordion-body" id="acc-salat">
-          <div class="accordion-inner">
-            <div class="menu-divider"></div>
-            <div class="menu-grid">
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Kyllingsalat</div>
-                <div class="menu-card-desc">Kyllingbrystfilet, ost, salat, tomat, agurk, mais, hvitløksaus og ananas. Serveres med brød.</div>
-                <div class="menu-card-price">159 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Tacosalat</div>
-                <div class="menu-card-desc">Tacokjøtt, ost, salat, avocado, mais, paprika, ananas, jalapeño nachos og salsa.</div>
-                <div class="menu-card-price">159 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Cæsar Salat</div>
-                <div class="menu-card-desc">Kyllingbrystfilet, bacon, brødkrutonger og parmesanost. Allergener: melk, hvete, sennep.</div>
-                <div class="menu-card-price">159 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Taco Wrap</div>
-                <div class="menu-card-desc">Tacokjøtt i hvetertortilla. Serveres med salat, salsa og rømme. Allergener: melk, hvete, soya.</div>
-                <div class="menu-card-price">149 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Kylling Wrap</div>
-                <div class="menu-card-desc">Marinert kyllingfilet, salat, tomat, agurk, feferoni og hvitløksaus. Allergener: melk, hvete, egg.</div>
-                <div class="menu-card-price">149 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Beef Wrap</div>
-                <div class="menu-card-desc">Stekt indrefilet med løk, salat, tomat, agurk, feferoni og hvitløksaus. Allergener: melk, hvete.</div>
-                <div class="menu-card-price">179 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Vegetar Wrap</div>
-                <div class="menu-card-desc">Fylt med ferske grønnsaker, salat og hvitløksaus. Allergener: melk, hvete.</div>
-                <div class="menu-card-price">129 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 05 Pizza -->
-      <div class="accordion-item">
-        <button class="accordion-header" data-target="acc-pizza">
-          <div class="acc-left">
-            <span class="acc-num">05</span>
-            <span class="acc-name">Pizza</span>
-          </div>
-          <div class="acc-right">
-            <span class="acc-count">10 varianter</span>
-            <span class="acc-toggle">
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
-            </span>
-          </div>
-        </button>
-        <div class="accordion-body" id="acc-pizza">
-          <div class="accordion-inner">
-            <div class="menu-divider"></div>
-            <p style="font-size:0.8rem; color:var(--muted); margin-bottom:1.25rem;">Alle pizzaene er laget på våre egne nybakte bunner og serveres med tomatsaus og ost.</p>
-            <div class="menu-grid">
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Calzone</div>
-                <div class="menu-card-desc">Innbakt pizza med ost og skinke. Allergener: melk.</div>
-                <div class="menu-card-price">129 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Margarita</div>
-                <div class="menu-card-desc">Tomatsaus og mozzarella. Allergener: ost.</div>
-                <div class="menu-card-price">119 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Capricosa</div>
-                <div class="menu-card-desc">Skinke og sjampinjong. Allergener: melk, hvete.</div>
-                <div class="menu-card-price">149 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Vegetariano</div>
-                <div class="menu-card-desc">Sjampinjong, løk, oliven, tomat og ruccola. Allergener: melk, hvete.</div>
-                <div class="menu-card-price">139 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Toscana</div>
-                <div class="menu-card-desc">Marinert kylling, tomat, løk, sjampinjong og peppermix. Serveres med hvitløksaus.</div>
-                <div class="menu-card-price">159 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Siciliana</div>
-                <div class="menu-card-desc">Skinke, pepperoni og sjampinjong. Allergener: melk, hvete.</div>
-                <div class="menu-card-price">159 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Lolo</div>
-                <div class="menu-card-desc">Kjøttdeig, oliven, sjampinjong, løk og hvitløksaus. Allergener: melk, hvete.</div>
-                <div class="menu-card-price">169 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Viva Mexico</div>
-                <div class="menu-card-desc">Kjøttdeig, pepperoni, mais, løk, paprika, jalapeño, nachochips og salsa.</div>
-                <div class="menu-card-price">159 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Mona Lisa</div>
-                <div class="menu-card-desc">Bacon, kjøttdeig og sjampinjong. Allergener: melk, hvete.</div>
-                <div class="menu-card-price">159 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Komponer din egen pizza</div>
-                <div class="menu-card-desc">Velg dine egne topping. Ekstra topping: ost, kjøtt, saus m.m. fra 25 kr.</div>
-                <div class="menu-card-price">180 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 06 Barnemeny -->
-      <div class="accordion-item">
-        <button class="accordion-header" data-target="acc-barn">
-          <div class="acc-left">
-            <span class="acc-num">06</span>
-            <span class="acc-name">Barnemeny</span>
-          </div>
-          <div class="acc-right">
-            <span class="acc-count">Opp til 12 år</span>
-            <span class="acc-toggle">
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
-            </span>
-          </div>
-        </button>
-        <div class="accordion-body" id="acc-barn">
-          <div class="accordion-inner">
-            <div class="menu-divider"></div>
-            <div class="menu-grid">
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Pølse med Pommes Frites</div>
-                <div class="menu-card-desc">Klassisk barnerett.</div>
-                <div class="menu-card-price">59 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Minitaco</div>
-                <div class="menu-card-desc">Tacokjøtt, ost, mais og rømme med en tortilla og et tacokjell. Allergener: melk, hvete, soya.</div>
-                <div class="menu-card-price">79 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-              <div class="menu-card reveal">
-                <div class="menu-card-name">Tortilla Pizza</div>
-                <div class="menu-card-desc">Hvetetortilla med tomatsaus og ost. Allergener: melk, hvete.</div>
-                <div class="menu-card-price">79 kr</div>
-                <div class="menu-card-delivery">
-                  <a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a>
-                  <a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div><!-- /accordion -->
+    <div class="accordion reveal">
+      <div class="accordion-item"><button class="accordion-header" data-target="acc-forretter"><div class="acc-left"><span class="acc-num">01</span><span class="acc-name">Forretter & Småretter</span></div><div class="acc-right"><span class="acc-count">6 retter</span><span class="acc-toggle"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></span></div></button><div class="accordion-body" id="acc-forretter"><div class="accordion-inner"><div class="menu-divider"></div><div class="menu-grid">
+        <div class="menu-card reveal"><div class="menu-card-name">Tortilla Pizza</div><div class="menu-card-desc">Hvetetortilla med tomatsaus, ost, kjøttdeig og jalapeño. Allergener: melk, hvete.</div><div class="menu-card-price">89 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Ostegratinerte Nachos</div><div class="menu-card-desc">Med salsa og rømme. Allergener: melk.</div><div class="menu-card-price">98 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Guacamole Nachos</div><div class="menu-card-desc">Hjemmelaget avocadodip med varme maischips.</div><div class="menu-card-price">85 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Dipmix</div><div class="menu-card-desc">Maischips med salsa.</div><div class="menu-card-price">69 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Hvitløkbrød</div><div class="menu-card-desc">Husets nybakte hvitløksbread. Allergener: egg, hvete, melk.</div><div class="menu-card-price">55 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Quesadilla</div><div class="menu-card-desc">Ostegratinert med jalapeño, tacosaus og rømme. Allergener: melk, hvete.</div><div class="menu-card-price">109 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+      </div></div></div></div>
+      <div class="accordion-item"><button class="accordion-header" data-target="acc-mex"><div class="acc-left"><span class="acc-num">02</span><span class="acc-name">Meksikanske Retter</span></div><div class="acc-right"><span class="acc-count">12 retter</span><span class="acc-toggle"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></span></div></button><div class="accordion-body" id="acc-mex"><div class="accordion-inner"><div class="menu-divider"></div><div class="menu-grid">
+        <div class="menu-card reveal"><div class="menu-card-name">Enchiladas de Picadillo</div><div class="menu-card-desc">Tre lag ostegratinerte maistortilla med tacokjøtt. Serveres med ris, salat, rømme og salsa.</div><div class="menu-card-price">188 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Enchiladas de Pollo</div><div class="menu-card-desc">Tre lag ostegratinerte maistortilla med marinert kylling. Serveres med ris, salat, rømme og salsa.</div><div class="menu-card-price">198 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Nachos Mexicano</div><div class="menu-card-desc">Ovnsgratinerte maischips med hjemmelaget tacokjøtt og ost. Serveres med salat, salsa og rømme.</div><div class="menu-card-price">179 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Nachos de Pollo</div><div class="menu-card-desc">Ovnsgratinerte maischips med kyllingfilet og ost. Serveres med salat, salsa og rømme.</div><div class="menu-card-price">179 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Taco</div><div class="menu-card-desc">Tre tacokjell med hjemmelaget tacokjøtt, ost og rømme. Serveres med nachos og salsa.</div><div class="menu-card-price">149 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Burrito Viva Mexico</div><div class="menu-card-desc">Ovnsgratinert hvetebortilla med tacokjøtt, salat, jalapeño, tacosaus og rømme.</div><div class="menu-card-price">188 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Burrito de Pollo</div><div class="menu-card-desc">Ovnsgratinert hvetebortilla med kylling, salat, tacosaus, rømme og husets ris.</div><div class="menu-card-price">188 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Burrito Vegetariano</div><div class="menu-card-desc">Ovnsgratinert hvetebortilla med løk, sjampinjong, paprika og mais. Serveres med salat, ris, tacosaus og rømme.</div><div class="menu-card-price">159 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Combo Burrito</div><div class="menu-card-desc">Hvetebortilla fylt med tacokjøtt, kylling og ost. Serveres med ris, salat, tacosaus og rømme.</div><div class="menu-card-price">188 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Fajitas med Kylling</div><div class="menu-card-desc">Serveres i rustikk stekepanne med paprika og løk, salat, guacamole, salsa, ris, ost og varme tortillas.</div><div class="menu-card-price">269 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Fajitas med Biff</div><div class="menu-card-desc">Serveres i rustikk stekepanne med paprika og løk, salat, guacamole, salsa, ris, ost og varme tortillas.</div><div class="menu-card-price">289 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Combo Fajitas</div><div class="menu-card-desc">Kylling og biff sammen i rustikk stekepanne med alt tilbehøret. Allergener: melk, hvete.</div><div class="menu-card-price">279 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+      </div></div></div></div>
+      <div class="accordion-item"><button class="accordion-header" data-target="acc-grill"><div class="acc-left"><span class="acc-num">03</span><span class="acc-name">Grillretter & Burgere</span></div><div class="acc-right"><span class="acc-count">9 retter</span><span class="acc-toggle"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></span></div></button><div class="accordion-body" id="acc-grill"><div class="accordion-inner"><div class="menu-divider"></div><div class="menu-grid">
+        <div class="menu-card reveal"><div class="menu-card-name">Kyllingfilet i Hvitvinsaus</div><div class="menu-card-desc">Stekt kyllingfilet med kremet hvitvinssaus, sjampinjong, løk og paprika. Serveres med sesonggrønnsaker og ris.</div><div class="menu-card-price">229 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Beefsteak Mexicana</div><div class="menu-card-desc">Stekt indrefilet med mais, paprika, jalapeño og løk i sterk tomatsaus. Valgfri poteter.</div><div class="menu-card-price">279 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Mexican Burger</div><div class="menu-card-desc">Hamburger med ost, nachos, salsa, guacamole, salat, sesamboller og pommes frites.</div><div class="menu-card-price">189 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Biffsnadder</div><div class="menu-card-desc">Strimlet biff med sjampinjong, løk, paprika og béarnaisesaus. Serveres med valgfri pommes frites.</div><div class="menu-card-price">219 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Kyllingsnadder med Peppersaus</div><div class="menu-card-desc">Marinert kyllingfilet med sjampinjong, løk og peppersaus. Serveres med salat og pommes frites.</div><div class="menu-card-price">219 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Biff</div><div class="menu-card-desc">Stekt indrefilet med béarnaisesaus, stekte sesonggrønnsaker og valgfri poteter.</div><div class="menu-card-price">279 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Pepperbiff</div><div class="menu-card-desc">Stekt indrefilet med peppersaus, sesongens stekte grønnsaker og valgfri poteter.</div><div class="menu-card-price">279 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Husets Kebab-tallerken</div><div class="menu-card-desc">Marinert biffkjøtt med hjemmelaget brød, salat, hvitløksaus og pommes frites.</div><div class="menu-card-price">189 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Husets Kylling Kebab-tallerken</div><div class="menu-card-desc">Marinert kyllingkjøtt med hjemmelaget brød, salat, hvitløksaus og pommes frites.</div><div class="menu-card-price">169 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+      </div></div></div></div>
+      <div class="accordion-item"><button class="accordion-header" data-target="acc-salat"><div class="acc-left"><span class="acc-num">04</span><span class="acc-name">Salater & Wraps</span></div><div class="acc-right"><span class="acc-count">7 retter</span><span class="acc-toggle"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></span></div></button><div class="accordion-body" id="acc-salat"><div class="accordion-inner"><div class="menu-divider"></div><div class="menu-grid">
+        <div class="menu-card reveal"><div class="menu-card-name">Kyllingsalat</div><div class="menu-card-desc">Kyllingbrystfilet, ost, salat, tomat, agurk, mais, hvitløksaus og ananas. Serveres med brød.</div><div class="menu-card-price">159 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Tacosalat</div><div class="menu-card-desc">Tacokjøtt, ost, salat, avocado, mais, paprika, ananas, jalapeño nachos og salsa.</div><div class="menu-card-price">159 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Cæsar Salat</div><div class="menu-card-desc">Kyllingbrystfilet, bacon, brødkrutonger og parmesanost. Allergener: melk, hvete, sennep.</div><div class="menu-card-price">159 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Taco Wrap</div><div class="menu-card-desc">Tacokjøtt i hvetertortilla. Serveres med salat, salsa og rømme. Allergener: melk, hvete, soya.</div><div class="menu-card-price">149 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Kylling Wrap</div><div class="menu-card-desc">Marinert kyllingfilet, salat, tomat, agurk, feferoni og hvitløksaus. Allergener: melk, hvete, egg.</div><div class="menu-card-price">149 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Beef Wrap</div><div class="menu-card-desc">Stekt indrefilet med løk, salat, tomat, agurk, feferoni og hvitløksaus. Allergener: melk, hvete.</div><div class="menu-card-price">179 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Vegetar Wrap</div><div class="menu-card-desc">Fylt med ferske grønnsaker, salat og hvitløksaus. Allergener: melk, hvete.</div><div class="menu-card-price">129 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+      </div></div></div></div>
+      <div class="accordion-item"><button class="accordion-header" data-target="acc-pizza"><div class="acc-left"><span class="acc-num">05</span><span class="acc-name">Pizza</span></div><div class="acc-right"><span class="acc-count">10 varianter</span><span class="acc-toggle"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></span></div></button><div class="accordion-body" id="acc-pizza"><div class="accordion-inner"><div class="menu-divider"></div><p style="font-size:0.76rem;color:var(--muted);margin-bottom:1.25rem;font-style:italic;">Alle pizzaene er laget på våre egne nybakte bunner og serveres med tomatsaus og ost.</p><div class="menu-grid">
+        <div class="menu-card reveal"><div class="menu-card-name">Calzone</div><div class="menu-card-desc">Innbakt pizza med ost og skinke. Allergener: melk.</div><div class="menu-card-price">129 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Margarita</div><div class="menu-card-desc">Tomatsaus og mozzarella. Allergener: ost.</div><div class="menu-card-price">119 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Capricosa</div><div class="menu-card-desc">Skinke og sjampinjong. Allergener: melk, hvete.</div><div class="menu-card-price">149 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Vegetariano</div><div class="menu-card-desc">Sjampinjong, løk, oliven, tomat og ruccola. Allergener: melk, hvete.</div><div class="menu-card-price">139 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Toscana</div><div class="menu-card-desc">Marinert kylling, tomat, løk, sjampinjong og peppermix. Serveres med hvitløksaus.</div><div class="menu-card-price">159 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Siciliana</div><div class="menu-card-desc">Skinke, pepperoni og sjampinjong. Allergener: melk, hvete.</div><div class="menu-card-price">159 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Lolo</div><div class="menu-card-desc">Kjøttdeig, oliven, sjampinjong, løk og hvitløksaus. Allergener: melk, hvete.</div><div class="menu-card-price">169 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Viva Mexico</div><div class="menu-card-desc">Kjøttdeig, pepperoni, mais, løk, paprika, jalapeño, nachochips og salsa.</div><div class="menu-card-price">159 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Mona Lisa</div><div class="menu-card-desc">Bacon, kjøttdeig og sjampinjong. Allergener: melk, hvete.</div><div class="menu-card-price">159 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Komponer din egen pizza</div><div class="menu-card-desc">Velg dine egne topping. Ekstra topping: ost, kjøtt, saus m.m. fra 25 kr.</div><div class="menu-card-price">180 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+      </div></div></div></div>
+      <div class="accordion-item"><button class="accordion-header" data-target="acc-barn"><div class="acc-left"><span class="acc-num">06</span><span class="acc-name">Barnemeny</span></div><div class="acc-right"><span class="acc-count">Opp til 12 år</span><span class="acc-toggle"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></span></div></button><div class="accordion-body" id="acc-barn"><div class="accordion-inner"><div class="menu-divider"></div><div class="menu-grid">
+        <div class="menu-card reveal"><div class="menu-card-name">Pølse med Pommes Frites</div><div class="menu-card-desc">Klassisk barnerett.</div><div class="menu-card-price">59 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Minitaco</div><div class="menu-card-desc">Tacokjøtt, ost, mais og rømme med en tortilla og et tacokjell. Allergener: melk, hvete, soya.</div><div class="menu-card-price">79 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+        <div class="menu-card reveal"><div class="menu-card-name">Tortilla Pizza</div><div class="menu-card-desc">Hvetetortilla med tomatsaus og ost. Allergener: melk, hvete.</div><div class="menu-card-price">79 kr</div><div class="menu-card-delivery"><a href="https://wolt.com/en/nor/fredrikstad/restaurant/cactus-cafe-restaurant" target="_blank" rel="noopener" class="btn-delivery btn-wolt">Wolt</a><a href="https://www.foodora.no/restaurant/dptj/cactus" target="_blank" rel="noopener" class="btn-delivery btn-foodora">Foodora</a></div></div>
+      </div></div></div></div>
+    </div>
   </div>
 </section>
 
-<!-- ═══════════════════ OM OSS ═══════════════════ -->
 <section id="om-oss">
   <div class="container">
     <div class="about-grid">
-
-      <!-- Photo with frame -->
       <div class="about-photo reveal">
-        <div class="about-photo-frame">
-          <img src="images/about.jpg" alt="Cactus Cafe & Restaurant fasade" />
-        </div>
+        <div class="about-photo-frame"><img src="images/about.jpg" alt="Cactus Cafe & Restaurant fasade" /></div>
         <div class="about-year-stamp">Fredrikstad siden 2012</div>
       </div>
-
-      <!-- Text side -->
       <div>
-        <span class="label-light">Vår historie</span>
-
-        <h2 class="section-title" style="margin-top: 0.6rem;">
-          Mer enn bare mat –<br><em style="font-style:italic; color:var(--yellow);">det er en opplevelse</em>
-        </h2>
-
-        <div class="ornamental-sep"><span></span></div>
-
-        <p>
-          Cactus Cafe & Restaurant ble grunnlagt med én drøm: å bringe de ekte smakene fra Mexico til Fredrikstad.
-          Vi tror på ferske råvarer, tradisjonelle oppskrifter og en atmosfære som gjør deg varm om hjertet.
-        </p>
-
-        <p>
-          Enten du er innom til en rask lunsj eller en hel kveld med venner og familie,
-          er du alltid hjertelig velkommen hos oss i Nygaardsgata.
-        </p>
-
-        <div class="about-stats">
-          <div class="stat-item">
-            <div class="stat-num">50<span>+</span></div>
-            <div class="stat-label">Retter på menyen</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-num">5<span>★</span></div>
-            <div class="stat-label">Vurdering</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-num">12<span>år</span></div>
-            <div class="stat-label">I Fredrikstad</div>
-          </div>
+        <span class="label reveal">Vår historie</span>
+        <h2 class="section-title reveal" style="margin-top:0.6rem;">Mer enn bare mat –<br><em>det er en opplevelse</em></h2>
+        <div class="ornamental-sep reveal"><span></span></div>
+        <p class="reveal">Cactus Cafe & Restaurant ble grunnlagt med én drøm: å bringe de ekte smakene fra Mexico til Fredrikstad. Vi tror på ferske råvarer, tradisjonelle oppskrifter og en atmosfære som gjør deg varm om hjertet.</p><br>
+        <p class="reveal">Enten du er innom til en rask lunsj eller en hel kveld med venner og familie, er du alltid hjertelig velkommen hos oss i Nygaardsgata.</p>
+        <div class="about-stats reveal">
+          <div class="stat-item"><div class="stat-num">50<span>+</span></div><div class="stat-label">Retter på menyen</div></div>
+          <div class="stat-item"><div class="stat-num">5<span>★</span></div><div class="stat-label">Vurdering</div></div>
+          <div class="stat-item"><div class="stat-num">12<span>år</span></div><div class="stat-label">I Fredrikstad</div></div>
         </div>
-
-        <div class="about-tags">
-          <span class="about-tag">
-            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="var(--yellow)" stroke-width="1.8" stroke-linecap="round"><path d="M8 1C8 1 3 5 3 9a5 5 0 0 0 10 0C13 5 8 1 8 1z"/></svg>
-            Ferske råvarer
-          </span>
-          <span class="about-tag">
-            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="var(--yellow)" stroke-width="1.8" stroke-linecap="round"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg>
-            Erfarne kokker
-          </span>
-          <span class="about-tag">
-            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="var(--yellow)" stroke-width="1.8" stroke-linecap="round"><path d="M4 3h8l-1.5 8H5.5L4 3z"/><line x1="3" y1="3" x2="13" y2="3"/></svg>
-            Cocktailbar
-          </span>
-          <span class="about-tag">
-            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="var(--yellow)" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="4" width="12" height="10" rx="1.5"/><path d="M5 4V3a3 3 0 0 1 6 0v1"/></svg>
-            Selskaper & arrangement
-          </span>
-          <span class="about-tag">
-            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="var(--yellow)" stroke-width="1.8" stroke-linecap="round"><path d="M2 12h12M4 12V7l4-4 4 4v5"/></svg>
-            Take Away
-          </span>
+        <div class="about-tags reveal">
+          <span class="about-tag"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round"><path d="M8 1C8 1 3 5 3 9a5 5 0 0 0 10 0C13 5 8 1 8 1z"/></svg> Ferske råvarer</span>
+          <span class="about-tag"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg> Erfarne kokker</span>
+          <span class="about-tag"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round"><path d="M4 3h8l-1.5 8H5.5L4 3z"/><line x1="3" y1="3" x2="13" y2="3"/></svg> Cocktailbar</span>
+          <span class="about-tag"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="4" width="12" height="10" rx="1.5"/><path d="M5 4V3a3 3 0 0 1 6 0v1"/></svg> Selskaper & arrangement</span>
+          <span class="about-tag"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round"><path d="M2 12h12M4 12V7l4-4 4 4v5"/></svg> Take Away</span>
         </div>
-
-
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════ ANMELDELSER ═══════════════════ -->
 <section id="anmeldelser">
   <div class="container">
-    <div class="center" style="margin-bottom: 3rem;">
-      <span class="label">Hva gjestene sier</span>
-      <h2 class="section-title" style="margin-top: 0.4rem;">Anmeldelser</h2>
-      <div class="divider"></div>
+    <div class="center" style="margin-bottom:3rem;">
+      <span class="label reveal">Hva gjestene sier</span>
+      <h2 class="section-title reveal" style="margin-top:0.5rem;">Anmeldelser</h2>
+      <div class="divider reveal"></div>
     </div>
-
     <div class="reviews-grid">
       <div class="review-card reveal">
-        <div class="review-stars">
-          <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
-        </div>
-        <p class="review-text">
-          "Absolutt beste meksikanske restauranten i Fredrikstad! Fajitasene var fantastiske – dampende varme og fulle av smak.
-          Og margaritaen? Perfekt balansert. Vi kommer definitivt tilbake!"
-        </p>
-        <div class="review-author">
-          <div class="review-avatar">MK</div>
-          <div>
-            <div class="review-name">Maria K.</div>
-            <div class="review-date">Februar 2026</div>
-          </div>
-        </div>
+        <div class="review-stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+        <p class="review-text">"Absolutt beste meksikanske restauranten i Fredrikstad! Fajitasene var fantastiske – dampende varme og fulle av smak. Og margaritaen? Perfekt balansert. Vi kommer definitivt tilbake!"</p>
+        <div class="review-author"><div class="review-avatar">MK</div><div><div class="review-name">Maria K.</div><div class="review-date">Februar 2026</div></div></div>
       </div>
-
       <div class="review-card reveal">
-        <div class="review-stars">
-          <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
-        </div>
-        <p class="review-text">
-          "Vi hadde selskap for 12 personer og alt gikk knirkefritt. Personalet var utrolig hyggelige og maten kom raskt.
-          Nachos som forrett og burritos som hoved – alle var fornøyde!"
-        </p>
-        <div class="review-author">
-          <div class="review-avatar" style="background: var(--green);">TO</div>
-          <div>
-            <div class="review-name">Thomas O.</div>
-            <div class="review-date">Januar 2026</div>
-          </div>
-        </div>
+        <div class="review-stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+        <p class="review-text">"Vi hadde selskap for 12 personer og alt gikk knirkefritt. Personalet var utrolig hyggelige og maten kom raskt. Nachos som forrett og burritos som hoved – alle var fornøyde!"</p>
+        <div class="review-author"><div class="review-avatar" style="background:var(--green);">TO</div><div><div class="review-name">Thomas O.</div><div class="review-date">Januar 2026</div></div></div>
       </div>
-
       <div class="review-card reveal">
-        <div class="review-stars">
-          <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
-        </div>
-        <p class="review-text">
-          "Koselig atmosfære, deilig mat og veldig rimelige priser. Tacos 3-pakken er et must!
-          Guacamolesen er laget fersk og det merkes. Cactus er blitt vår nye favorittrestaurant."
-        </p>
-        <div class="review-author">
-          <div class="review-avatar" style="background: #9B4A0F;">SA</div>
-          <div>
-            <div class="review-name">Sara A.</div>
-            <div class="review-date">Desember 2025</div>
-          </div>
-        </div>
+        <div class="review-stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+        <p class="review-text">"Koselig atmosfære, deilig mat og veldig rimelige priser. Tacos 3-pakken er et must! Guacamolesen er laget fersk og det merkes. Cactus er blitt vår nye favorittrestaurant."</p>
+        <div class="review-author"><div class="review-avatar" style="background:#9B4A0F;">SA</div><div><div class="review-name">Sara A.</div><div class="review-date">Desember 2025</div></div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════ KONTAKT ═══════════════════ -->
 <section id="kontakt">
   <div class="container">
-    <div class="center" style="margin-bottom: 3rem;">
-      <span class="label">Finn oss</span>
-      <h2 class="section-title" style="margin-top: 0.4rem;">Kontakt & Åpningstider</h2>
-      <div class="divider"></div>
+    <div class="center" style="margin-bottom:3rem;">
+      <span class="label reveal">Finn oss</span>
+      <h2 class="section-title reveal" style="margin-top:0.5rem;">Kontakt & <em>Åpningstider</em></h2>
+      <div class="divider reveal"></div>
     </div>
-
     <div class="contact-grid">
       <div class="contact-info">
-        <div class="contact-block">
-          <h3>Adresse</h3>
-          <p>
-            Cactus Cafe & Restaurant<br>
-            Nygaardsgata 21<br>
-            1606 Fredrikstad, Norge
-          </p>
-        </div>
-        <div class="contact-block">
-          <h3>Telefon & E-post</h3>
-          <p>
-            <a href="tel:+4769313705">69 31 37 05</a><br>
-            <a href="mailto:miran_baban@hotmail.com">miran_baban@hotmail.com</a>
-          </p>
-        </div>
-        <div class="contact-block">
-          <h3>Åpningstider</h3>
-          <table class="hours-table">
-            <tr><td>Mandag – Torsdag</td><td>11:00 – 22:00</td></tr>
-            <tr><td>Fredag – Lørdag</td><td>11:00 – 23:00</td></tr>
-            <tr><td>Søndag</td><td>12:00 – 21:00</td></tr>
-          </table>
-        </div>
-        <div class="contact-actions">
+        <div class="contact-block reveal"><h3>Adresse</h3><p>Cactus Cafe & Restaurant<br>Nygaardsgata 21<br>1606 Fredrikstad, Norge</p></div>
+        <div class="contact-block reveal"><h3>Telefon & E-post</h3><p><a href="tel:+4769313705">69 31 37 05</a><br><a href="mailto:miran_baban@hotmail.com">miran_baban@hotmail.com</a></p></div>
+        <div class="contact-block reveal"><h3>Åpningstider</h3><table class="hours-table"><tr><td>Mandag – Torsdag</td><td>11:00 – 22:00</td></tr><tr><td>Fredag – Lørdag</td><td>11:00 – 23:00</td></tr><tr><td>Søndag</td><td>12:00 – 21:00</td></tr></table></div>
+        <div class="contact-actions reveal">
           <a href="https://www.facebook.com/profile.php?id=100063639846757" target="_blank" rel="noopener" class="btn btn-facebook">Følg oss på Facebook</a>
           <a href="tel:+4769313705" class="btn btn-primary">Ring oss</a>
         </div>
       </div>
-
       <div class="contact-map reveal">
-        <iframe
-          src="https://maps.google.com/maps?q=Nygaardsgata+21,+1606+Fredrikstad,+Norway&t=&z=16&ie=UTF8&iwloc=&output=embed"
-          allowfullscreen="" loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          title="Cactus Cafe & Restaurant – Nygaardsgata 21, Fredrikstad">
-        </iframe>
+        <iframe src="https://maps.google.com/maps?q=Nygaardsgata+21,+1606+Fredrikstad,+Norway&t=&z=16&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Cactus Cafe & Restaurant – Nygaardsgata 21, Fredrikstad"></iframe>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════ FOOTER ═══════════════════ -->
 <footer>
   <div class="container footer-inner">
-    <div class="footer-logo">
-      <img src="images/logo.png" alt="Cactus" style="height:36px; width:auto; border-radius:4px;" />
-    </div>
+    <div class="footer-logo"><img src="images/logo.png" alt="Cactus" /></div>
     <ul class="footer-links">
       <li><a href="#meny">Meny</a></li>
       <li><a href="#om-oss">Om oss</a></li>
       <li><a href="#kontakt">Kontakt</a></li>
       <li><a href="https://www.facebook.com/profile.php?id=100063639846757" target="_blank" rel="noopener">Facebook</a></li>
     </ul>
-    <p class="footer-copy">© 2026 Cactus Cafe & Restaurant</p>
+    <p class="footer-copy">&copy; 2026 Cactus Cafe & Restaurant</p>
   </div>
 </footer>
 
 <script>
-  // ── Navbar scroll shadow ──
   const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 20);
-  }, { passive: true });
+  window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 20); }, { passive: true });
 
-  // ── Hamburger ──
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobileMenu');
-  hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('open');
-    mobileMenu.classList.toggle('open');
-  });
+  hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileMenu.classList.toggle('open'); });
   document.querySelectorAll('.mobile-link, .mobile-menu .btn').forEach(el => {
-    el.addEventListener('click', () => {
-      hamburger.classList.remove('open');
-      mobileMenu.classList.remove('open');
-    });
+    el.addEventListener('click', () => { hamburger.classList.remove('open'); mobileMenu.classList.remove('open'); });
   });
 
-  // ── Accordion ──
   document.querySelectorAll('.accordion-header').forEach(btn => {
     btn.addEventListener('click', () => {
       const targetId = btn.dataset.target;
       const body = document.getElementById(targetId);
       const isOpen = body.classList.contains('open');
-
-      // Close all
       document.querySelectorAll('.accordion-body').forEach(b => b.classList.remove('open'));
       document.querySelectorAll('.accordion-header').forEach(h => h.classList.remove('active'));
-
-      // Open clicked (if it was closed)
-      if (!isOpen) {
-        body.classList.add('open');
-        btn.classList.add('active');
-        // Trigger reveal for newly visible cards
-        setTimeout(observeElements, 50);
-      }
+      if (!isOpen) { body.classList.add('open'); btn.classList.add('active'); setTimeout(observeElements, 60); }
     });
   });
 
-  // ── Scroll reveal ──
   function observeElements() {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => entry.target.classList.add('visible'), i * 80);
-          observer.unobserve(entry.target);
-        }
+        if (entry.isIntersecting) { setTimeout(() => entry.target.classList.add('visible'), i * 60); observer.unobserve(entry.target); }
       });
-    }, { threshold: 0.1 });
-
+    }, { threshold: 0.08 });
     document.querySelectorAll('.reveal:not(.visible)').forEach(el => observer.observe(el));
   }
   observeElements();
